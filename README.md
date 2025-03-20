@@ -1,0 +1,1 @@
+# MiW_Algorytm_Gen
