@@ -1,0 +1,17 @@
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\AlGen.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\AlGen.AssemblyInfoInputs.cache
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\AlGen.AssemblyInfo.cs
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\AlGen.csproj.CoreCompileInputs.cache
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\AlGen.csproj.AssemblyReference.cache
+c:\Users\arkadiusz.mulkityn\AlGen\bin\Debug\net9.0-windows\AlGen.exe
+c:\Users\arkadiusz.mulkityn\AlGen\bin\Debug\net9.0-windows\AlGen.deps.json
+c:\Users\arkadiusz.mulkityn\AlGen\bin\Debug\net9.0-windows\AlGen.runtimeconfig.json
+c:\Users\arkadiusz.mulkityn\AlGen\bin\Debug\net9.0-windows\AlGen.dll
+c:\Users\arkadiusz.mulkityn\AlGen\bin\Debug\net9.0-windows\AlGen.pdb
+c:\Users\arkadiusz.mulkityn\AlGen\bin\Debug\net9.0-windows\System.Windows.Forms.DataVisualization.dll
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\AlGen.csproj.Up2Date
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\AlGen.dll
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\refint\AlGen.dll
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\AlGen.pdb
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\AlGen.genruntimeconfig.cache
+c:\Users\arkadiusz.mulkityn\AlGen\obj\Debug\net9.0-windows\ref\AlGen.dll
