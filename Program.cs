@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace ProjektStudent
+namespace AlGen
 {
  
     internal static class Program

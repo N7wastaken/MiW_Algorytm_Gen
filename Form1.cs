@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ProjektStudent
+namespace AlGen
 {
     public partial class Form1 : Form
     {

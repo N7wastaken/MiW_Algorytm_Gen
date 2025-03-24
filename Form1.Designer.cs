@@ -1,4 +1,4 @@
-﻿namespace ProjektStudent
+﻿namespace AlGen
 {
     partial class Form1
     {
