@@ -199,24 +199,28 @@
 
             this.lblZ2Pop.Text = "Populacja";
             this.lblZ2Pop.Location = new System.Drawing.Point(10, 25);
+            this.lblZ2Pop.Size = new System.Drawing.Size(50, 23);
             this.txtZ2Pop.Text = "13";
             this.txtZ2Pop.Location = new System.Drawing.Point(80, 22);
             this.txtZ2Pop.Size = new System.Drawing.Size(50, 23);
 
             this.lblZ2Bits.Text = "Bity";
             this.lblZ2Bits.Location = new System.Drawing.Point(10, 55);
+            this.lblZ2Bits.Size = new System.Drawing.Size(60, 23);
             this.txtZ2Bits.Text = "4";
             this.txtZ2Bits.Location = new System.Drawing.Point(80, 52);
             this.txtZ2Bits.Size = new System.Drawing.Size(50, 23);
 
             this.lblZ2Iter.Text = "Iteracje";
             this.lblZ2Iter.Location = new System.Drawing.Point(150, 25);
+            this.lblZ2Iter.Size = new System.Drawing.Size(60, 23);
             this.txtZ2Iter.Text = "20";
             this.txtZ2Iter.Location = new System.Drawing.Point(210, 22);
             this.txtZ2Iter.Size = new System.Drawing.Size(50, 23);
 
             this.lblZ2Tourn.Text = "Turniej";
             this.lblZ2Tourn.Location = new System.Drawing.Point(150, 55);
+            this.lblZ2Tourn.Size = new System.Drawing.Size(60, 23);
             this.txtZ2Tourn.Text = "3";
             this.txtZ2Tourn.Location = new System.Drawing.Point(210, 52);
             this.txtZ2Tourn.Size = new System.Drawing.Size(50, 23);
@@ -254,24 +258,28 @@
 
             this.lblZ3Pop.Text = "Populacja";
             this.lblZ3Pop.Location = new System.Drawing.Point(10, 25);
+            this.lblZ3Pop.Size = new System.Drawing.Size(50, 23);
             this.txtZ3Pop.Text = "13";
             this.txtZ3Pop.Location = new System.Drawing.Point(80, 22);
             this.txtZ3Pop.Size = new System.Drawing.Size(50, 23);
 
             this.lblZ3Bits.Text = "Bity";
             this.lblZ3Bits.Location = new System.Drawing.Point(10, 55);
+            this.lblZ3Bits.Size = new System.Drawing.Size(50, 23);
             this.txtZ3Bits.Text = "5";
             this.txtZ3Bits.Location = new System.Drawing.Point(80, 52);
             this.txtZ3Bits.Size = new System.Drawing.Size(50, 23);
 
             this.lblZ3Iter.Text = "Iteracje";
             this.lblZ3Iter.Location = new System.Drawing.Point(150, 25);
+            this.lblZ3Iter.Size = new System.Drawing.Size(60, 23);
             this.txtZ3Iter.Text = "20";
             this.txtZ3Iter.Location = new System.Drawing.Point(210, 22);
             this.txtZ3Iter.Size = new System.Drawing.Size(50, 23);
 
             this.lblZ3Tourn.Text = "Turniej";
             this.lblZ3Tourn.Location = new System.Drawing.Point(150, 55);
+            this.lblZ3Tourn.Size = new System.Drawing.Size(60, 23);
             this.txtZ3Tourn.Text = "3";
             this.txtZ3Tourn.Location = new System.Drawing.Point(210, 52);
             this.txtZ3Tourn.Size = new System.Drawing.Size(50, 23);
