@@ -2,55 +2,54 @@
 {
     partial class Form1
     {
-        // Deklaracje komponentów
         private System.ComponentModel.IContainer components = null;
 
-        // Zad1
-        private System.Windows.Forms.GroupBox grpZad1;
-        private System.Windows.Forms.Label lblZ1Pop;
-        private System.Windows.Forms.TextBox txtZ1Pop;
-        private System.Windows.Forms.Label lblZ1Bits;
-        private System.Windows.Forms.TextBox txtZ1Bits;
-        private System.Windows.Forms.Label lblZ1Iter;
-        private System.Windows.Forms.TextBox txtZ1Iter;
-        private System.Windows.Forms.Label lblZ1Tourn;
-        private System.Windows.Forms.TextBox txtZ1Tourn;
-        private System.Windows.Forms.Button btnZ1Start;
-        private System.Windows.Forms.Button btnZ1Stop;
-        private System.Windows.Forms.TextBox txtZ1Wyniki;
+        // ============= Dywanik (Zadanie 1) =============
+        private System.Windows.Forms.GroupBox grpDywanik;
+        private System.Windows.Forms.Label lblPopulacjaDywanik;
+        private System.Windows.Forms.TextBox txtPopulacjaDywanik;
+        private System.Windows.Forms.Label lblBityDywanik;
+        private System.Windows.Forms.TextBox txtBityDywanik;
+        private System.Windows.Forms.Label lblIteracjeDywanik;
+        private System.Windows.Forms.TextBox txtIteracjeDywanik;
+        private System.Windows.Forms.Label lblTurniejDywanik;
+        private System.Windows.Forms.TextBox txtTurniejDywanik;
+        private System.Windows.Forms.Button btnStartDywanik;
+        private System.Windows.Forms.Button btnStopDywanik;
+        private System.Windows.Forms.TextBox txtWynikiDywanik;
 
-        // Zad2
-        private System.Windows.Forms.GroupBox grpZad2;
-        private System.Windows.Forms.Label lblZ2Pop;
-        private System.Windows.Forms.TextBox txtZ2Pop;
-        private System.Windows.Forms.Label lblZ2Bits;
-        private System.Windows.Forms.TextBox txtZ2Bits;
-        private System.Windows.Forms.Label lblZ2Iter;
-        private System.Windows.Forms.TextBox txtZ2Iter;
-        private System.Windows.Forms.Label lblZ2Tourn;
-        private System.Windows.Forms.TextBox txtZ2Tourn;
-        private System.Windows.Forms.Button btnZ2Start;
-        private System.Windows.Forms.Button btnZ2Stop;
-        private System.Windows.Forms.TextBox txtZ2Wyniki;
+        // ============= Sinus (Zadanie 2) =============
+        private System.Windows.Forms.GroupBox grpSinus;
+        private System.Windows.Forms.Label lblPopulacjaSinus;
+        private System.Windows.Forms.TextBox txtPopulacjaSinus;
+        private System.Windows.Forms.Label lblBitySinus;
+        private System.Windows.Forms.TextBox txtBitySinus;
+        private System.Windows.Forms.Label lblIteracjeSinus;
+        private System.Windows.Forms.TextBox txtIteracjeSinus;
+        private System.Windows.Forms.Label lblTurniejSinus;
+        private System.Windows.Forms.TextBox txtTurniejSinus;
+        private System.Windows.Forms.Button btnStartSinus;
+        private System.Windows.Forms.Button btnStopSinus;
+        private System.Windows.Forms.TextBox txtWynikiSinus;
 
-        // Zad3
-        private System.Windows.Forms.GroupBox grpZad3;
-        private System.Windows.Forms.Label lblZ3Pop;
-        private System.Windows.Forms.TextBox txtZ3Pop;
-        private System.Windows.Forms.Label lblZ3Bits;
-        private System.Windows.Forms.TextBox txtZ3Bits;
-        private System.Windows.Forms.Label lblZ3Iter;
-        private System.Windows.Forms.TextBox txtZ3Iter;
-        private System.Windows.Forms.Label lblZ3Tourn;
-        private System.Windows.Forms.TextBox txtZ3Tourn;
-        private System.Windows.Forms.Button btnZ3Start;
-        private System.Windows.Forms.Button btnZ3Stop;
-        private System.Windows.Forms.TextBox txtZ3Wyniki;
+        // ============= XOR (Zadanie 3) =============
+        private System.Windows.Forms.GroupBox grpXOR;
+        private System.Windows.Forms.Label lblPopulacjaXOR;
+        private System.Windows.Forms.TextBox txtPopulacjaXOR;
+        private System.Windows.Forms.Label lblBityXOR;
+        private System.Windows.Forms.TextBox txtBityXOR;
+        private System.Windows.Forms.Label lblIteracjeXOR;
+        private System.Windows.Forms.TextBox txtIteracjeXOR;
+        private System.Windows.Forms.Label lblTurniejXOR;
+        private System.Windows.Forms.TextBox txtTurniejXOR;
+        private System.Windows.Forms.Button btnStartXOR;
+        private System.Windows.Forms.Button btnStopXOR;
+        private System.Windows.Forms.TextBox txtWynikiXOR;
 
         // Timery
-        private System.Windows.Forms.Timer timerZad1;
-        private System.Windows.Forms.Timer timerZad2;
-        private System.Windows.Forms.Timer timerZad3;
+        private System.Windows.Forms.Timer timerDywanik;
+        private System.Windows.Forms.Timer timerSinus;
+        private System.Windows.Forms.Timer timerXOR;
 
         protected override void Dispose(bool disposing)
         {
@@ -65,265 +64,314 @@
         {
             this.components = new System.ComponentModel.Container();
 
-            // Zad1
-            this.grpZad1 = new System.Windows.Forms.GroupBox();
-            this.lblZ1Pop = new System.Windows.Forms.Label();
-            this.txtZ1Pop = new System.Windows.Forms.TextBox();
-            this.lblZ1Bits = new System.Windows.Forms.Label();
-            this.txtZ1Bits = new System.Windows.Forms.TextBox();
-            this.lblZ1Iter = new System.Windows.Forms.Label();
-            this.txtZ1Iter = new System.Windows.Forms.TextBox();
-            this.lblZ1Tourn = new System.Windows.Forms.Label();
-            this.txtZ1Tourn = new System.Windows.Forms.TextBox();
-            this.btnZ1Start = new System.Windows.Forms.Button();
-            this.btnZ1Stop = new System.Windows.Forms.Button();
-            this.txtZ1Wyniki = new System.Windows.Forms.TextBox();
+            // ------------------------------------------------------------
+            // GROUPBOX: Dywanik (Zadanie 1)
+            // ------------------------------------------------------------
+            this.grpDywanik = new System.Windows.Forms.GroupBox();
+            this.lblPopulacjaDywanik = new System.Windows.Forms.Label();
+            this.txtPopulacjaDywanik = new System.Windows.Forms.TextBox();
+            this.lblBityDywanik = new System.Windows.Forms.Label();
+            this.txtBityDywanik = new System.Windows.Forms.TextBox();
+            this.lblIteracjeDywanik = new System.Windows.Forms.Label();
+            this.txtIteracjeDywanik = new System.Windows.Forms.TextBox();
+            this.lblTurniejDywanik = new System.Windows.Forms.Label();
+            this.txtTurniejDywanik = new System.Windows.Forms.TextBox();
+            this.btnStartDywanik = new System.Windows.Forms.Button();
+            this.btnStopDywanik = new System.Windows.Forms.Button();
+            this.txtWynikiDywanik = new System.Windows.Forms.TextBox();
 
-            // Zad2
-            this.grpZad2 = new System.Windows.Forms.GroupBox();
-            this.lblZ2Pop = new System.Windows.Forms.Label();
-            this.txtZ2Pop = new System.Windows.Forms.TextBox();
-            this.lblZ2Bits = new System.Windows.Forms.Label();
-            this.txtZ2Bits = new System.Windows.Forms.TextBox();
-            this.lblZ2Iter = new System.Windows.Forms.Label();
-            this.txtZ2Iter = new System.Windows.Forms.TextBox();
-            this.lblZ2Tourn = new System.Windows.Forms.Label();
-            this.txtZ2Tourn = new System.Windows.Forms.TextBox();
-            this.btnZ2Start = new System.Windows.Forms.Button();
-            this.btnZ2Stop = new System.Windows.Forms.Button();
-            this.txtZ2Wyniki = new System.Windows.Forms.TextBox();
+            // ------------------------------------------------------------
+            // GROUPBOX: Sinus (Zadanie 2)
+            // ------------------------------------------------------------
+            this.grpSinus = new System.Windows.Forms.GroupBox();
+            this.lblPopulacjaSinus = new System.Windows.Forms.Label();
+            this.txtPopulacjaSinus = new System.Windows.Forms.TextBox();
+            this.lblBitySinus = new System.Windows.Forms.Label();
+            this.txtBitySinus = new System.Windows.Forms.TextBox();
+            this.lblIteracjeSinus = new System.Windows.Forms.Label();
+            this.txtIteracjeSinus = new System.Windows.Forms.TextBox();
+            this.lblTurniejSinus = new System.Windows.Forms.Label();
+            this.txtTurniejSinus = new System.Windows.Forms.TextBox();
+            this.btnStartSinus = new System.Windows.Forms.Button();
+            this.btnStopSinus = new System.Windows.Forms.Button();
+            this.txtWynikiSinus = new System.Windows.Forms.TextBox();
 
-            // Zad3
-            this.grpZad3 = new System.Windows.Forms.GroupBox();
-            this.lblZ3Pop = new System.Windows.Forms.Label();
-            this.txtZ3Pop = new System.Windows.Forms.TextBox();
-            this.lblZ3Bits = new System.Windows.Forms.Label();
-            this.txtZ3Bits = new System.Windows.Forms.TextBox();
-            this.lblZ3Iter = new System.Windows.Forms.Label();
-            this.txtZ3Iter = new System.Windows.Forms.TextBox();
-            this.lblZ3Tourn = new System.Windows.Forms.Label();
-            this.txtZ3Tourn = new System.Windows.Forms.TextBox();
-            this.btnZ3Start = new System.Windows.Forms.Button();
-            this.btnZ3Stop = new System.Windows.Forms.Button();
-            this.txtZ3Wyniki = new System.Windows.Forms.TextBox();
+            // ------------------------------------------------------------
+            // GROUPBOX: XOR (Zadanie 3)
+            // ------------------------------------------------------------
+            this.grpXOR = new System.Windows.Forms.GroupBox();
+            this.lblPopulacjaXOR = new System.Windows.Forms.Label();
+            this.txtPopulacjaXOR = new System.Windows.Forms.TextBox();
+            this.lblBityXOR = new System.Windows.Forms.Label();
+            this.txtBityXOR = new System.Windows.Forms.TextBox();
+            this.lblIteracjeXOR = new System.Windows.Forms.Label();
+            this.txtIteracjeXOR = new System.Windows.Forms.TextBox();
+            this.lblTurniejXOR = new System.Windows.Forms.Label();
+            this.txtTurniejXOR = new System.Windows.Forms.TextBox();
+            this.btnStartXOR = new System.Windows.Forms.Button();
+            this.btnStopXOR = new System.Windows.Forms.Button();
+            this.txtWynikiXOR = new System.Windows.Forms.TextBox();
 
-            // Timery
-            this.timerZad1 = new System.Windows.Forms.Timer(this.components);
-            this.timerZad2 = new System.Windows.Forms.Timer(this.components);
-            this.timerZad3 = new System.Windows.Forms.Timer(this.components);
+            // ------------------------------------------------------------
+            // TIMERY
+            // ------------------------------------------------------------
+            this.timerDywanik = new System.Windows.Forms.Timer(this.components);
+            this.timerSinus = new System.Windows.Forms.Timer(this.components);
+            this.timerXOR = new System.Windows.Forms.Timer(this.components);
 
-            // Ustawienia Form
+            // ------------------------------------------------------------
+            // FORM (główne okno)
+            // ------------------------------------------------------------
             this.SuspendLayout();
-            // Rozmiar okna
             this.ClientSize = new System.Drawing.Size(1080, 520);
             this.Name = "Form1";
-            this.Text = "Zadania Genetyczne - Student";
+            this.Text = "Algorytmy Genetyczne - Form1";
 
-            // =====================
-            // Zadanie 1
-            // =====================
-            this.grpZad1.Text = "Zadanie 1 (Dywanik)";
-            // Pozycja i rozmiar groupBox
-            this.grpZad1.Location = new System.Drawing.Point(10, 10);
-            this.grpZad1.Size = new System.Drawing.Size(340, 140);
+            // ============================================================
+            // Dywanik
+            // ============================================================
+            this.grpDywanik.Text = "Zadanie 1 (Dywanik)";
+            this.grpDywanik.Location = new System.Drawing.Point(10, 10);
+            this.grpDywanik.Size = new System.Drawing.Size(340, 140);
 
             // Label Populacja
-            this.lblZ1Pop.Text = "Populacja";
-            this.lblZ1Pop.Location = new System.Drawing.Point(10, 25);
-            this.lblZ1Pop.Size = new System.Drawing.Size(60, 23);
-            // Pole Populacja
-            this.txtZ1Pop.Text = "9";
-            this.txtZ1Pop.Location = new System.Drawing.Point(80, 22);
-            this.txtZ1Pop.Size = new System.Drawing.Size(50, 23);
+            this.lblPopulacjaDywanik.Text = "Populacja";
+            this.lblPopulacjaDywanik.Location = new System.Drawing.Point(10, 25);
+            this.lblPopulacjaDywanik.Size = new System.Drawing.Size(60, 23);
+
+            // TextBox Populacja
+            this.txtPopulacjaDywanik.Text = "9";
+            this.txtPopulacjaDywanik.Location = new System.Drawing.Point(80, 22);
+            this.txtPopulacjaDywanik.Size = new System.Drawing.Size(50, 23);
 
             // Label Bity
-            this.lblZ1Bits.Text = "Bity";
-            this.lblZ1Bits.Location = new System.Drawing.Point(10, 55);
-            this.lblZ1Bits.Size = new System.Drawing.Size(60, 23);
-            // Pole Bity
-            this.txtZ1Bits.Text = "5";
-            this.txtZ1Bits.Location = new System.Drawing.Point(80, 52);
-            this.txtZ1Bits.Size = new System.Drawing.Size(50, 23);
+            this.lblBityDywanik.Text = "Bity";
+            this.lblBityDywanik.Location = new System.Drawing.Point(10, 55);
+            this.lblBityDywanik.Size = new System.Drawing.Size(60, 23);
+
+            // TextBox Bity
+            this.txtBityDywanik.Text = "5";
+            this.txtBityDywanik.Location = new System.Drawing.Point(80, 52);
+            this.txtBityDywanik.Size = new System.Drawing.Size(50, 23);
 
             // Label Iteracje
-            this.lblZ1Iter.Text = "Iteracje";
-            this.lblZ1Iter.Location = new System.Drawing.Point(150, 25);
-            this.lblZ1Iter.Size = new System.Drawing.Size(60, 23);
-            // Pole Iteracje
-            this.txtZ1Iter.Text = "20";
-            this.txtZ1Iter.Location = new System.Drawing.Point(210, 22);
-            this.txtZ1Iter.Size = new System.Drawing.Size(50, 23);
+            this.lblIteracjeDywanik.Text = "Iteracje";
+            this.lblIteracjeDywanik.Location = new System.Drawing.Point(150, 25);
+            this.lblIteracjeDywanik.Size = new System.Drawing.Size(60, 23);
+
+            // TextBox Iteracje
+            this.txtIteracjeDywanik.Text = "20";
+            this.txtIteracjeDywanik.Location = new System.Drawing.Point(210, 22);
+            this.txtIteracjeDywanik.Size = new System.Drawing.Size(50, 23);
 
             // Label Turniej
-            this.lblZ1Tourn.Text = "Turniej";
-            this.lblZ1Tourn.Location = new System.Drawing.Point(150, 55);
-            this.lblZ1Tourn.Size = new System.Drawing.Size(60, 23);
-            // Pole Turniej
-            this.txtZ1Tourn.Text = "2";
-            this.txtZ1Tourn.Location = new System.Drawing.Point(210, 52);
-            this.txtZ1Tourn.Size = new System.Drawing.Size(50, 23);
+            this.lblTurniejDywanik.Text = "Turniej";
+            this.lblTurniejDywanik.Location = new System.Drawing.Point(150, 55);
+            this.lblTurniejDywanik.Size = new System.Drawing.Size(60, 23);
 
-            // Przycisk Start
-            this.btnZ1Start.Text = "Start";
-            this.btnZ1Start.Location = new System.Drawing.Point(10, 90);
-            this.btnZ1Start.Size = new System.Drawing.Size(60, 30);
-            // Przycisk Stop
-            this.btnZ1Stop.Text = "Stop";
-            this.btnZ1Stop.Location = new System.Drawing.Point(80, 90);
-            this.btnZ1Stop.Size = new System.Drawing.Size(60, 30);
+            // TextBox Turniej
+            this.txtTurniejDywanik.Text = "2";
+            this.txtTurniejDywanik.Location = new System.Drawing.Point(210, 52);
+            this.txtTurniejDywanik.Size = new System.Drawing.Size(50, 23);
 
-            // Dodaj do groupBox Zad1
-            this.grpZad1.Controls.Add(this.lblZ1Pop);
-            this.grpZad1.Controls.Add(this.txtZ1Pop);
-            this.grpZad1.Controls.Add(this.lblZ1Bits);
-            this.grpZad1.Controls.Add(this.txtZ1Bits);
-            this.grpZad1.Controls.Add(this.lblZ1Iter);
-            this.grpZad1.Controls.Add(this.txtZ1Iter);
-            this.grpZad1.Controls.Add(this.lblZ1Tourn);
-            this.grpZad1.Controls.Add(this.txtZ1Tourn);
-            this.grpZad1.Controls.Add(this.btnZ1Start);
-            this.grpZad1.Controls.Add(this.btnZ1Stop);
+            // Button Start
+            this.btnStartDywanik.Text = "Start";
+            this.btnStartDywanik.Location = new System.Drawing.Point(10, 90);
+            this.btnStartDywanik.Size = new System.Drawing.Size(60, 30);
 
-            // Pole wyników Zad1
-            this.txtZ1Wyniki.Multiline = true;
-            this.txtZ1Wyniki.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtZ1Wyniki.Location = new System.Drawing.Point(10, 160);
-            this.txtZ1Wyniki.Size = new System.Drawing.Size(340, 150);
+            // Button Stop
+            this.btnStopDywanik.Text = "Stop";
+            this.btnStopDywanik.Location = new System.Drawing.Point(80, 90);
+            this.btnStopDywanik.Size = new System.Drawing.Size(60, 30);
 
-            // =====================
-            // Zadanie 2
-            // =====================
-            this.grpZad2.Text = "Zadanie 2 (Sinusik)";
-            this.grpZad2.Location = new System.Drawing.Point(360, 10);
-            this.grpZad2.Size = new System.Drawing.Size(340, 140);
+            // Dodaj do grupy Dywanik
+            this.grpDywanik.Controls.Add(this.lblPopulacjaDywanik);
+            this.grpDywanik.Controls.Add(this.txtPopulacjaDywanik);
+            this.grpDywanik.Controls.Add(this.lblBityDywanik);
+            this.grpDywanik.Controls.Add(this.txtBityDywanik);
+            this.grpDywanik.Controls.Add(this.lblIteracjeDywanik);
+            this.grpDywanik.Controls.Add(this.txtIteracjeDywanik);
+            this.grpDywanik.Controls.Add(this.lblTurniejDywanik);
+            this.grpDywanik.Controls.Add(this.txtTurniejDywanik);
+            this.grpDywanik.Controls.Add(this.btnStartDywanik);
+            this.grpDywanik.Controls.Add(this.btnStopDywanik);
 
-            this.lblZ2Pop.Text = "Populacja";
-            this.lblZ2Pop.Location = new System.Drawing.Point(10, 25);
-            this.lblZ2Pop.Size = new System.Drawing.Size(50, 23);
-            this.txtZ2Pop.Text = "13";
-            this.txtZ2Pop.Location = new System.Drawing.Point(80, 22);
-            this.txtZ2Pop.Size = new System.Drawing.Size(50, 23);
+            // TextBox Wyniki Dywanik
+            this.txtWynikiDywanik.Multiline = true;
+            this.txtWynikiDywanik.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtWynikiDywanik.Location = new System.Drawing.Point(10, 160);
+            this.txtWynikiDywanik.Size = new System.Drawing.Size(340, 150);
 
-            this.lblZ2Bits.Text = "Bity";
-            this.lblZ2Bits.Location = new System.Drawing.Point(10, 55);
-            this.lblZ2Bits.Size = new System.Drawing.Size(60, 23);
-            this.txtZ2Bits.Text = "4";
-            this.txtZ2Bits.Location = new System.Drawing.Point(80, 52);
-            this.txtZ2Bits.Size = new System.Drawing.Size(50, 23);
+            // ============================================================
+            // Sinus
+            // ============================================================
+            this.grpSinus.Text = "Zadanie 2 (Sinus)";
+            this.grpSinus.Location = new System.Drawing.Point(360, 10);
+            this.grpSinus.Size = new System.Drawing.Size(340, 140);
 
-            this.lblZ2Iter.Text = "Iteracje";
-            this.lblZ2Iter.Location = new System.Drawing.Point(150, 25);
-            this.lblZ2Iter.Size = new System.Drawing.Size(60, 23);
-            this.txtZ2Iter.Text = "20";
-            this.txtZ2Iter.Location = new System.Drawing.Point(210, 22);
-            this.txtZ2Iter.Size = new System.Drawing.Size(50, 23);
+            // Label Populacja
+            this.lblPopulacjaSinus.Text = "Populacja";
+            this.lblPopulacjaSinus.Location = new System.Drawing.Point(10, 25);
+            this.lblPopulacjaSinus.Size = new System.Drawing.Size(60, 23);
 
-            this.lblZ2Tourn.Text = "Turniej";
-            this.lblZ2Tourn.Location = new System.Drawing.Point(150, 55);
-            this.lblZ2Tourn.Size = new System.Drawing.Size(60, 23);
-            this.txtZ2Tourn.Text = "3";
-            this.txtZ2Tourn.Location = new System.Drawing.Point(210, 52);
-            this.txtZ2Tourn.Size = new System.Drawing.Size(50, 23);
+            // TextBox Populacja
+            this.txtPopulacjaSinus.Text = "13";
+            this.txtPopulacjaSinus.Location = new System.Drawing.Point(80, 22);
+            this.txtPopulacjaSinus.Size = new System.Drawing.Size(50, 23);
 
-            this.btnZ2Start.Text = "Start";
-            this.btnZ2Start.Location = new System.Drawing.Point(10, 90);
-            this.btnZ2Start.Size = new System.Drawing.Size(60, 30);
+            // Label Bity
+            this.lblBitySinus.Text = "Bity";
+            this.lblBitySinus.Location = new System.Drawing.Point(10, 55);
+            this.lblBitySinus.Size = new System.Drawing.Size(60, 23);
 
-            this.btnZ2Stop.Text = "Stop";
-            this.btnZ2Stop.Location = new System.Drawing.Point(80, 90);
-            this.btnZ2Stop.Size = new System.Drawing.Size(60, 30);
+            // TextBox Bity
+            this.txtBitySinus.Text = "4";
+            this.txtBitySinus.Location = new System.Drawing.Point(80, 52);
+            this.txtBitySinus.Size = new System.Drawing.Size(50, 23);
 
-            this.grpZad2.Controls.Add(this.lblZ2Pop);
-            this.grpZad2.Controls.Add(this.txtZ2Pop);
-            this.grpZad2.Controls.Add(this.lblZ2Bits);
-            this.grpZad2.Controls.Add(this.txtZ2Bits);
-            this.grpZad2.Controls.Add(this.lblZ2Iter);
-            this.grpZad2.Controls.Add(this.txtZ2Iter);
-            this.grpZad2.Controls.Add(this.lblZ2Tourn);
-            this.grpZad2.Controls.Add(this.txtZ2Tourn);
-            this.grpZad2.Controls.Add(this.btnZ2Start);
-            this.grpZad2.Controls.Add(this.btnZ2Stop);
+            // Label Iteracje
+            this.lblIteracjeSinus.Text = "Iteracje";
+            this.lblIteracjeSinus.Location = new System.Drawing.Point(150, 25);
+            this.lblIteracjeSinus.Size = new System.Drawing.Size(60, 23);
 
-            this.txtZ2Wyniki.Multiline = true;
-            this.txtZ2Wyniki.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtZ2Wyniki.Location = new System.Drawing.Point(360, 160);
-            this.txtZ2Wyniki.Size = new System.Drawing.Size(340, 150);
+            // TextBox Iteracje
+            // Zadanie zaleca >= 100, dlatego domyślnie 100
+            this.txtIteracjeSinus.Text = "100";
+            this.txtIteracjeSinus.Location = new System.Drawing.Point(210, 22);
+            this.txtIteracjeSinus.Size = new System.Drawing.Size(50, 23);
 
-            // =====================
-            // Zadanie 3
-            // =====================
-            this.grpZad3.Text = "Zadanie 3 (XOR)";
-            this.grpZad3.Location = new System.Drawing.Point(710, 10);
-            this.grpZad3.Size = new System.Drawing.Size(340, 140);
+            // Label Turniej
+            this.lblTurniejSinus.Text = "Turniej";
+            this.lblTurniejSinus.Location = new System.Drawing.Point(150, 55);
+            this.lblTurniejSinus.Size = new System.Drawing.Size(60, 23);
 
-            this.lblZ3Pop.Text = "Populacja";
-            this.lblZ3Pop.Location = new System.Drawing.Point(10, 25);
-            this.lblZ3Pop.Size = new System.Drawing.Size(50, 23);
-            this.txtZ3Pop.Text = "13";
-            this.txtZ3Pop.Location = new System.Drawing.Point(80, 22);
-            this.txtZ3Pop.Size = new System.Drawing.Size(50, 23);
+            // TextBox Turniej
+            this.txtTurniejSinus.Text = "3";
+            this.txtTurniejSinus.Location = new System.Drawing.Point(210, 52);
+            this.txtTurniejSinus.Size = new System.Drawing.Size(50, 23);
 
-            this.lblZ3Bits.Text = "Bity";
-            this.lblZ3Bits.Location = new System.Drawing.Point(10, 55);
-            this.lblZ3Bits.Size = new System.Drawing.Size(50, 23);
-            this.txtZ3Bits.Text = "5";
-            this.txtZ3Bits.Location = new System.Drawing.Point(80, 52);
-            this.txtZ3Bits.Size = new System.Drawing.Size(50, 23);
+            // Button Start
+            this.btnStartSinus.Text = "Start";
+            this.btnStartSinus.Location = new System.Drawing.Point(10, 90);
+            this.btnStartSinus.Size = new System.Drawing.Size(60, 30);
 
-            this.lblZ3Iter.Text = "Iteracje";
-            this.lblZ3Iter.Location = new System.Drawing.Point(150, 25);
-            this.lblZ3Iter.Size = new System.Drawing.Size(60, 23);
-            this.txtZ3Iter.Text = "20";
-            this.txtZ3Iter.Location = new System.Drawing.Point(210, 22);
-            this.txtZ3Iter.Size = new System.Drawing.Size(50, 23);
+            // Button Stop
+            this.btnStopSinus.Text = "Stop";
+            this.btnStopSinus.Location = new System.Drawing.Point(80, 90);
+            this.btnStopSinus.Size = new System.Drawing.Size(60, 30);
 
-            this.lblZ3Tourn.Text = "Turniej";
-            this.lblZ3Tourn.Location = new System.Drawing.Point(150, 55);
-            this.lblZ3Tourn.Size = new System.Drawing.Size(60, 23);
-            this.txtZ3Tourn.Text = "3";
-            this.txtZ3Tourn.Location = new System.Drawing.Point(210, 52);
-            this.txtZ3Tourn.Size = new System.Drawing.Size(50, 23);
+            // Dodaj do grupy Sinus
+            this.grpSinus.Controls.Add(this.lblPopulacjaSinus);
+            this.grpSinus.Controls.Add(this.txtPopulacjaSinus);
+            this.grpSinus.Controls.Add(this.lblBitySinus);
+            this.grpSinus.Controls.Add(this.txtBitySinus);
+            this.grpSinus.Controls.Add(this.lblIteracjeSinus);
+            this.grpSinus.Controls.Add(this.txtIteracjeSinus);
+            this.grpSinus.Controls.Add(this.lblTurniejSinus);
+            this.grpSinus.Controls.Add(this.txtTurniejSinus);
+            this.grpSinus.Controls.Add(this.btnStartSinus);
+            this.grpSinus.Controls.Add(this.btnStopSinus);
 
-            this.btnZ3Start.Text = "Start";
-            this.btnZ3Start.Location = new System.Drawing.Point(10, 90);
-            this.btnZ3Start.Size = new System.Drawing.Size(60, 30);
+            // TextBox Wyniki Sinus
+            this.txtWynikiSinus.Multiline = true;
+            this.txtWynikiSinus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtWynikiSinus.Location = new System.Drawing.Point(360, 160);
+            this.txtWynikiSinus.Size = new System.Drawing.Size(340, 150);
 
-            this.btnZ3Stop.Text = "Stop";
-            this.btnZ3Stop.Location = new System.Drawing.Point(80, 90);
-            this.btnZ3Stop.Size = new System.Drawing.Size(60, 30);
+            // ============================================================
+            // XOR
+            // ============================================================
+            this.grpXOR.Text = "Zadanie 3 (XOR)";
+            this.grpXOR.Location = new System.Drawing.Point(710, 10);
+            this.grpXOR.Size = new System.Drawing.Size(340, 140);
 
-            this.grpZad3.Controls.Add(this.lblZ3Pop);
-            this.grpZad3.Controls.Add(this.txtZ3Pop);
-            this.grpZad3.Controls.Add(this.lblZ3Bits);
-            this.grpZad3.Controls.Add(this.txtZ3Bits);
-            this.grpZad3.Controls.Add(this.lblZ3Iter);
-            this.grpZad3.Controls.Add(this.txtZ3Iter);
-            this.grpZad3.Controls.Add(this.lblZ3Tourn);
-            this.grpZad3.Controls.Add(this.txtZ3Tourn);
-            this.grpZad3.Controls.Add(this.btnZ3Start);
-            this.grpZad3.Controls.Add(this.btnZ3Stop);
+            // Label Populacja
+            this.lblPopulacjaXOR.Text = "Populacja";
+            this.lblPopulacjaXOR.Location = new System.Drawing.Point(10, 25);
+            this.lblPopulacjaXOR.Size = new System.Drawing.Size(60, 23);
 
-            this.txtZ3Wyniki.Multiline = true;
-            this.txtZ3Wyniki.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtZ3Wyniki.Location = new System.Drawing.Point(710, 160);
-            this.txtZ3Wyniki.Size = new System.Drawing.Size(340, 150);
+            // TextBox Populacja
+            this.txtPopulacjaXOR.Text = "13";
+            this.txtPopulacjaXOR.Location = new System.Drawing.Point(80, 22);
+            this.txtPopulacjaXOR.Size = new System.Drawing.Size(50, 23);
 
+            // Label Bity
+            this.lblBityXOR.Text = "Bity";
+            this.lblBityXOR.Location = new System.Drawing.Point(10, 55);
+            this.lblBityXOR.Size = new System.Drawing.Size(60, 23);
+
+            // TextBox Bity
+            this.txtBityXOR.Text = "5";
+            this.txtBityXOR.Location = new System.Drawing.Point(80, 52);
+            this.txtBityXOR.Size = new System.Drawing.Size(50, 23);
+
+            // Label Iteracje
+            this.lblIteracjeXOR.Text = "Iteracje";
+            this.lblIteracjeXOR.Location = new System.Drawing.Point(150, 25);
+            this.lblIteracjeXOR.Size = new System.Drawing.Size(60, 23);
+
+            // TextBox Iteracje
+            this.txtIteracjeXOR.Text = "100";
+            this.txtIteracjeXOR.Location = new System.Drawing.Point(210, 22);
+            this.txtIteracjeXOR.Size = new System.Drawing.Size(50, 23);
+
+            // Label Turniej
+            this.lblTurniejXOR.Text = "Turniej";
+            this.lblTurniejXOR.Location = new System.Drawing.Point(150, 55);
+            this.lblTurniejXOR.Size = new System.Drawing.Size(60, 23);
+
+            // TextBox Turniej
+            this.txtTurniejXOR.Text = "3";
+            this.txtTurniejXOR.Location = new System.Drawing.Point(210, 52);
+            this.txtTurniejXOR.Size = new System.Drawing.Size(50, 23);
+
+            // Button Start
+            this.btnStartXOR.Text = "Start";
+            this.btnStartXOR.Location = new System.Drawing.Point(10, 90);
+            this.btnStartXOR.Size = new System.Drawing.Size(60, 30);
+
+            // Button Stop
+            this.btnStopXOR.Text = "Stop";
+            this.btnStopXOR.Location = new System.Drawing.Point(80, 90);
+            this.btnStopXOR.Size = new System.Drawing.Size(60, 30);
+
+            // Dodaj do grupy XOR
+            this.grpXOR.Controls.Add(this.lblPopulacjaXOR);
+            this.grpXOR.Controls.Add(this.txtPopulacjaXOR);
+            this.grpXOR.Controls.Add(this.lblBityXOR);
+            this.grpXOR.Controls.Add(this.txtBityXOR);
+            this.grpXOR.Controls.Add(this.lblIteracjeXOR);
+            this.grpXOR.Controls.Add(this.txtIteracjeXOR);
+            this.grpXOR.Controls.Add(this.lblTurniejXOR);
+            this.grpXOR.Controls.Add(this.txtTurniejXOR);
+            this.grpXOR.Controls.Add(this.btnStartXOR);
+            this.grpXOR.Controls.Add(this.btnStopXOR);
+
+            // TextBox Wyniki XOR
+            this.txtWynikiXOR.Multiline = true;
+            this.txtWynikiXOR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtWynikiXOR.Location = new System.Drawing.Point(710, 160);
+            this.txtWynikiXOR.Size = new System.Drawing.Size(340, 150);
+
+            // ------------------------------------------------------------
             // Ustawienia timerów
-            this.timerZad1.Interval = 500;
-            this.timerZad2.Interval = 500;
-            this.timerZad3.Interval = 500;
+            // ------------------------------------------------------------
+            this.timerDywanik.Interval = 500;
+            this.timerSinus.Interval = 500;
+            this.timerXOR.Interval = 500;
 
+            // ------------------------------------------------------------
             // Dodaj kontenery do Form
-            this.Controls.Add(this.grpZad1);
-            this.Controls.Add(this.grpZad2);
-            this.Controls.Add(this.grpZad3);
+            // ------------------------------------------------------------
+            this.Controls.Add(this.grpDywanik);
+            this.Controls.Add(this.grpSinus);
+            this.Controls.Add(this.grpXOR);
 
             // Dodaj pola wyników
-            this.Controls.Add(this.txtZ1Wyniki);
-            this.Controls.Add(this.txtZ2Wyniki);
-            this.Controls.Add(this.txtZ3Wyniki);
+            this.Controls.Add(this.txtWynikiDywanik);
+            this.Controls.Add(this.txtWynikiSinus);
+            this.Controls.Add(this.txtWynikiXOR);
 
-            // Kończymy
             this.ResumeLayout(false);
         }
     }

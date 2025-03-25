@@ -6,213 +6,232 @@ namespace AlGen
 {
     public partial class Form1 : Form
     {
-        
         private AlgorytmGenetyczny ga;
 
-             private bool[][] populacjaZ1;
-        private double[] przystZ1;
-        private int licznikIterZ1;
-        private int maxIterZ1;
+        // ===================== Dywanik =====================
+        private bool[][] populacjaDywanik;
+        private double[] przystDywanik;
+        private int licznikIterDywanik;
+        private int maxIterDywanik;
 
-        // Zad2
-        private bool[][] populacjaZ2;
-        private double[] przystZ2;
-        private int licznikIterZ2;
-        private int maxIterZ2;
+        // ===================== Sinus =====================
+        private bool[][] populacjaSinus;
+        private double[] przystSinus;
+        private int licznikIterSinus;
+        private int maxIterSinus;
 
-        // Zad3
-        private bool[][] populacjaZ3;
-        private double[] przystZ3;
-        private int licznikIterZ3;
-        private int maxIterZ3;
+        // ===================== XOR =====================
+        private bool[][] populacjaXOR;
+        private double[] przystXOR;
+        private int licznikIterXOR;
+        private int maxIterXOR;
 
         public Form1()
         {
-            
             InitializeComponent();
 
-            // Tworzymy obiekt logiki
+            // Obiekt algorytmu genetycznego
             ga = new AlgorytmGenetyczny();
 
-            // Podpinamy przyciski do metod
-            btnZ1Start.Click += BtnZ1Start_Click;
-            btnZ1Stop.Click += BtnZ1Stop_Click;
-            timerZad1.Tick += TimerZad1_Tick;
+            // Podpinanie handlerów przycisków i timerów
 
-            btnZ2Start.Click += BtnZ2Start_Click;
-            btnZ2Stop.Click += BtnZ2Stop_Click;
-            timerZad2.Tick += TimerZad2_Tick;
+            // Dywanik
+            btnStartDywanik.Click += BtnStartDywanik_Click;
+            btnStopDywanik.Click += BtnStopDywanik_Click;
+            timerDywanik.Tick += TimerDywanik_Tick;
 
-            btnZ3Start.Click += BtnZ3Start_Click;
-            btnZ3Stop.Click += BtnZ3Stop_Click;
-            timerZad3.Tick += TimerZad3_Tick;
+            // Sinus
+            btnStartSinus.Click += BtnStartSinus_Click;
+            btnStopSinus.Click += BtnStopSinus_Click;
+            timerSinus.Tick += TimerSinus_Tick;
+
+            // XOR
+            btnStartXOR.Click += BtnStartXOR_Click;
+            btnStopXOR.Click += BtnStopXOR_Click;
+            timerXOR.Tick += TimerXOR_Tick;
         }
 
-        
-        // Zad1 Start
-        private void BtnZ1Start_Click(object sender, EventArgs e)
+        // =====================================================================
+        // DYWANIK
+        // =====================================================================
+        private void BtnStartDywanik_Click(object sender, EventArgs e)
         {
-            
-            txtZ1Wyniki.Clear();
+            txtWynikiDywanik.Clear();
 
-            
-            int pop = int.Parse(txtZ1Pop.Text);
-            int bity = int.Parse(txtZ1Bits.Text);
-            maxIterZ1 = int.Parse(txtZ1Iter.Text);
-            int turniej = int.Parse(txtZ1Tourn.Text);
+            int pop = int.Parse(txtPopulacjaDywanik.Text);
+            int bity = int.Parse(txtBityDywanik.Text);
+            maxIterDywanik = int.Parse(txtIteracjeDywanik.Text);
+            int turniej = int.Parse(txtTurniejDywanik.Text);
 
-    
-            populacjaZ1 = ga.InicjalizujZad1(pop, bity);
+            // Inicjalizacja
+            populacjaDywanik = ga.InicjalizujDywanik(pop, bity);
+            przystDywanik = ga.ObliczPrzystosowanieDywanik(populacjaDywanik, bity);
 
-            przystZ1 = ga.ObliczPrzystosowanieZad1(populacjaZ1, bity);
+            licznikIterDywanik = 0;
+            txtWynikiDywanik.AppendText(
+                $"Start: Najl={Max(przystDywanik):F4} Sr={Avg(przystDywanik):F4}\r\n"
+            );
 
-      
-            licznikIterZ1 = 0;
-
-          
-            txtZ1Wyniki.AppendText($"Start: Najl={Max(przystZ1):F4} Sr={Avg(przystZ1):F4}\r\n");
-
-
-            timerZad1.Tag = new Zad1Stan { bity = bity, turniej = turniej };
-            timerZad1.Start();
+            timerDywanik.Tag = new DywanikStan { bity = bity, turniej = turniej };
+            timerDywanik.Start();
         }
 
-        // Zad1 Stop
-        private void BtnZ1Stop_Click(object sender, EventArgs e)
+        private void BtnStopDywanik_Click(object sender, EventArgs e)
         {
-            timerZad1.Stop();
-            txtZ1Wyniki.AppendText("Zad1 STOP\r\n");
+            timerDywanik.Stop();
+            txtWynikiDywanik.AppendText("Dywanik STOP\r\n");
         }
 
-        // Timer Zad1
-        private void TimerZad1_Tick(object sender, EventArgs e)
+        private void TimerDywanik_Tick(object sender, EventArgs e)
         {
-            // Odczytujemy stan
-            var st = (Zad1Stan)timerZad1.Tag;
+            var st = (DywanikStan)timerDywanik.Tag;
 
-            licznikIterZ1++;
-            if (licznikIterZ1 > maxIterZ1)
+            licznikIterDywanik++;
+            if (licznikIterDywanik > maxIterDywanik)
             {
-                // Koniec
-                timerZad1.Stop();
-                txtZ1Wyniki.AppendText("Koniec Zad1\r\n");
+                timerDywanik.Stop();
+                txtWynikiDywanik.AppendText("Koniec Dywanik\r\n");
                 return;
             }
 
-            // Jedna iteracja
-            bool[][] nowaPop = ga.IteracjaZad1(populacjaZ1, przystZ1, st.bity, st.turniej);
-            populacjaZ1 = nowaPop;
-            przystZ1 = ga.ObliczPrzystosowanieZad1(populacjaZ1, st.bity);
+            // Iteracja
+            bool[][] nowaPop = ga.IteracjaDywanik(
+                populacjaDywanik,
+                przystDywanik,
+                st.bity,
+                st.turniej
+            );
+            populacjaDywanik = nowaPop;
+            przystDywanik = ga.ObliczPrzystosowanieDywanik(populacjaDywanik, st.bity);
 
-            // Wypis
-            txtZ1Wyniki.AppendText($"Iter={licznikIterZ1}: Najl={Max(przystZ1):F4}, Sr={Avg(przystZ1):F4}\r\n");
+            txtWynikiDywanik.AppendText(
+                $"Iter={licznikIterDywanik}: Najl={Max(przystDywanik):F4}, Sr={Avg(przystDywanik):F4}\r\n"
+            );
         }
 
-        // Klasa do zapisu stanu Zad1
-        class Zad1Stan
+        private class DywanikStan
         {
             public int bity;
             public int turniej;
         }
 
-
-        // Zad2 Start
-        private void BtnZ2Start_Click(object sender, EventArgs e)
+        // =====================================================================
+        // SINUS
+        // =====================================================================
+        private void BtnStartSinus_Click(object sender, EventArgs e)
         {
-            txtZ2Wyniki.Clear();
-            int pop = int.Parse(txtZ2Pop.Text);
-            int bity = int.Parse(txtZ2Bits.Text);
-            maxIterZ2 = int.Parse(txtZ2Iter.Text);
-            int turniej = int.Parse(txtZ2Tourn.Text);
+            txtWynikiSinus.Clear();
 
-            populacjaZ2 = ga.InicjalizujZad2(pop, bity);
-            przystZ2 = ga.ObliczPrzystosowanieZad2(populacjaZ2, bity);
+            int pop = int.Parse(txtPopulacjaSinus.Text);
+            int bity = int.Parse(txtBitySinus.Text);
+            maxIterSinus = int.Parse(txtIteracjeSinus.Text);
+            int turniej = int.Parse(txtTurniejSinus.Text);
 
-            licznikIterZ2 = 0;
-            txtZ2Wyniki.AppendText($"Start: Najl={Max(przystZ2):F4} Sr={Avg(przystZ2):F4}\r\n");
+            populacjaSinus = ga.InicjalizujSinus(pop, bity);
+            przystSinus = ga.ObliczPrzystosowanieSinus(populacjaSinus, bity);
 
-            timerZad2.Tag = new Zad2Stan { bity=bity, turniej=turniej };
-            timerZad2.Start();
+            licznikIterSinus = 0;
+            txtWynikiSinus.AppendText(
+                $"Start: Najl={Max(przystSinus):F4} Sr={Avg(przystSinus):F4}\r\n"
+            );
+
+            timerSinus.Tag = new SinusStan { bity = bity, turniej = turniej };
+            timerSinus.Start();
         }
 
-        private void BtnZ2Stop_Click(object sender, EventArgs e)
+        private void BtnStopSinus_Click(object sender, EventArgs e)
         {
-            timerZad2.Stop();
-            txtZ2Wyniki.AppendText("Zad2 STOP\r\n");
+            timerSinus.Stop();
+            txtWynikiSinus.AppendText("Sinus STOP\r\n");
         }
 
-        private void TimerZad2_Tick(object sender, EventArgs e)
+        private void TimerSinus_Tick(object sender, EventArgs e)
         {
-            var st=(Zad2Stan) timerZad2.Tag;
-            licznikIterZ2++;
-            if(licznikIterZ2> maxIterZ2)
+            var st = (SinusStan)timerSinus.Tag;
+
+            licznikIterSinus++;
+            if (licznikIterSinus > maxIterSinus)
             {
-                timerZad2.Stop();
-                txtZ2Wyniki.AppendText("Koniec Zad2\r\n");
+                timerSinus.Stop();
+                txtWynikiSinus.AppendText("Koniec Sinus\r\n");
                 return;
             }
-            bool[][] nowa = ga.IteracjaZad2(populacjaZ2, przystZ2, st.bity, st.turniej);
-            populacjaZ2= nowa;
-            przystZ2= ga.ObliczPrzystosowanieZad2(populacjaZ2, st.bity);
 
-            txtZ2Wyniki.AppendText($"Iter={licznikIterZ2}: Najl={Max(przystZ2):F4}, Sr={Avg(przystZ2):F4}\r\n");
+            bool[][] nowa = ga.IteracjaSinus(populacjaSinus, przystSinus, st.bity, st.turniej);
+            populacjaSinus = nowa;
+            przystSinus = ga.ObliczPrzystosowanieSinus(populacjaSinus, st.bity);
+
+            txtWynikiSinus.AppendText(
+                $"Iter={licznikIterSinus}: Najl={Max(przystSinus):F4}, Sr={Avg(przystSinus):F4}\r\n"
+            );
         }
 
-        class Zad2Stan
+        private class SinusStan
         {
             public int bity;
             public int turniej;
         }
 
-        // Zad3 Start
-        private void BtnZ3Start_Click(object sender, EventArgs e)
+        // =====================================================================
+        // XOR
+        // =====================================================================
+        private void BtnStartXOR_Click(object sender, EventArgs e)
         {
-            txtZ3Wyniki.Clear();
-            int pop= int.Parse(txtZ3Pop.Text);
-            int bity= int.Parse(txtZ3Bits.Text);
-            maxIterZ3= int.Parse(txtZ3Iter.Text);
-            int turniej= int.Parse(txtZ3Tourn.Text);
+            txtWynikiXOR.Clear();
 
-            populacjaZ3= ga.InicjalizujZad3(pop, bity);
-            przystZ3= ga.ObliczPrzystosowanieZad3(populacjaZ3, bity);
+            int pop = int.Parse(txtPopulacjaXOR.Text);
+            int bity = int.Parse(txtBityXOR.Text);
+            maxIterXOR = int.Parse(txtIteracjeXOR.Text);
+            int turniej = int.Parse(txtTurniejXOR.Text);
 
-            licznikIterZ3= 0;
-            txtZ3Wyniki.AppendText($"Start: Najl={Max(przystZ3):F4} Sr={Avg(przystZ3):F4}\r\n");
+            populacjaXOR = ga.InicjalizujXOR(pop, bity);
+            przystXOR = ga.ObliczPrzystosowanieXOR(populacjaXOR, bity);
 
-            timerZad3.Tag= new Zad3Stan { bity=bity, turniej= turniej};
-            timerZad3.Start();
+            licznikIterXOR = 0;
+            txtWynikiXOR.AppendText(
+                $"Start: Najl={Max(przystXOR):F4} Sr={Avg(przystXOR):F4}\r\n"
+            );
+
+            timerXOR.Tag = new XORStan { bity = bity, turniej = turniej };
+            timerXOR.Start();
         }
 
-        private void BtnZ3Stop_Click(object sender, EventArgs e)
+        private void BtnStopXOR_Click(object sender, EventArgs e)
         {
-            timerZad3.Stop();
-            txtZ3Wyniki.AppendText("Zad3 STOP\r\n");
+            timerXOR.Stop();
+            txtWynikiXOR.AppendText("XOR STOP\r\n");
         }
 
-        private void TimerZad3_Tick(object sender, EventArgs e)
+        private void TimerXOR_Tick(object sender, EventArgs e)
         {
-            var st=(Zad3Stan) timerZad3.Tag;
-            licznikIterZ3++;
-            if(licznikIterZ3> maxIterZ3)
+            var st = (XORStan)timerXOR.Tag;
+
+            licznikIterXOR++;
+            if (licznikIterXOR > maxIterXOR)
             {
-                timerZad3.Stop();
-                txtZ3Wyniki.AppendText("Koniec Zad3\r\n");
+                timerXOR.Stop();
+                txtWynikiXOR.AppendText("Koniec XOR\r\n");
                 return;
             }
-            bool[][] nowa= ga.IteracjaZad3(populacjaZ3, przystZ3, st.bity, st.turniej);
-            populacjaZ3= nowa;
-            przystZ3= ga.ObliczPrzystosowanieZad3(populacjaZ3, st.bity);
 
-            txtZ3Wyniki.AppendText($"Iter={licznikIterZ3}: Najl={Max(przystZ3):F4}, Sr={Avg(przystZ3):F4}\r\n");
+            bool[][] nowa = ga.IteracjaXOR(populacjaXOR, przystXOR, st.bity, st.turniej);
+            populacjaXOR = nowa;
+            przystXOR = ga.ObliczPrzystosowanieXOR(populacjaXOR, st.bity);
+
+            txtWynikiXOR.AppendText(
+                $"Iter={licznikIterXOR}: Najl={Max(przystXOR):F4}, Sr={Avg(przystXOR):F4}\r\n"
+            );
         }
 
-        class Zad3Stan
+        private class XORStan
         {
             public int bity;
             public int turniej;
         }
 
-        // Pomocnicze metody do obliczania max i avg
+        // =====================================================================
+        // Pomocnicze
+        // =====================================================================
         private double Max(double[] tab) => tab.Max();
         private double Avg(double[] tab) => tab.Average();
     }
