@@ -80,7 +80,7 @@ namespace AlGen
             return populacja;
         }
 
-        // Przykładowa niewielka baza (można rozbudować lub wczytać z pliku):
+        // Przykładowa (skrócona) baza testowa:
         private double[] przykladoweX = { -1.0, -0.8, -0.6 };
         private double[] przykladoweY = {  0.59554, 0.58813, 0.64181 };
 
@@ -92,8 +92,7 @@ namespace AlGen
                 (double pa, double pb, double pc) =
                     DekodujTrzyParametry(populacja[i], bityNaParametr, 0, 3);
 
-                // Liczymy SSE (Sum of Squared Errors), a ponieważ chcemy minimalizować SSE,
-                // definiujemy fitness = -SSE, by dalej maksymalizować fitness.
+                // SSE (Sum of Squared Errors); minimalizujemy -> fitness = -SSE
                 double sse = 0.0;
                 for (int s = 0; s < przykladoweX.Length; s++)
                 {
@@ -103,7 +102,7 @@ namespace AlGen
                     double blad = yTrue - pred;
                     sse += blad * blad;
                 }
-                fitness[i] = -sse; // im większe (mniej ujemne), tym lepsze
+                fitness[i] = -sse;
             }
             return fitness;
         }
@@ -192,7 +191,7 @@ namespace AlGen
                     double blad = xorOczekiwane[k] - wy;
                     sse += blad * blad;
                 }
-                // minimalizacja SSE => fitness = -SSE
+                // minimalizacja SSE => fitness = -sse
                 fit[i] = -sse;
             }
             return fit;
@@ -260,7 +259,7 @@ namespace AlGen
             return (bool[])wybrany.Clone();
         }
 
-        private int ZnajdzNajlepszy(double[] przyst)
+        public int ZnajdzNajlepszy(double[] przyst)
         {
             double maxVal = double.MinValue;
             int best = 0;
@@ -300,8 +299,8 @@ namespace AlGen
             return (c1, c2);
         }
 
-        // Dekodowanie parametru x1, x2 (np. dywanik)
-        private (double, double) DekodujDwaParametry(bool[] bity, int bpp, double minVal, double maxVal)
+        // Dekodowanie parametru x1, x2
+        public (double, double) DekodujDwaParametry(bool[] bity, int bpp, double minVal, double maxVal)
         {
             int wart1 = 0, wart2 = 0;
             for (int i = 0; i < bpp; i++)
@@ -316,7 +315,7 @@ namespace AlGen
         }
 
         // Dekodowanie 3 parametrów (sinus)
-        private (double, double, double) DekodujTrzyParametry(bool[] bity, int bpp, double minV, double maxV)
+        public (double, double, double) DekodujTrzyParametry(bool[] bity, int bpp, double minV, double maxV)
         {
             double p1 = DekodujJeden(bity, 0, bpp, minV, maxV);
             double p2 = DekodujJeden(bity, bpp, bpp, minV, maxV);
@@ -336,7 +335,7 @@ namespace AlGen
         }
 
         // Dekodowanie wag do XOR
-        private double[] DekodujWagi(bool[] bity, int bpp, int ile, double minW, double maxW)
+        public double[] DekodujWagi(bool[] bity, int bpp, int ile, double minW, double maxW)
         {
             double[] wagi = new double[ile];
             for (int i = 0; i < ile; i++)
