@@ -123,9 +123,12 @@
             // FORM (główne okno)
             // ------------------------------------------------------------
             this.SuspendLayout();
-            this.ClientSize = new System.Drawing.Size(1080, 520);
+            this.ClientSize = new System.Drawing.Size(1060, 325);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.CenterToScreen();
             this.Name = "Form1";
-            this.Text = "Algorytmy Genetyczne - Form1";
+            this.Text = "Algorytmy Genetyczne";
 
             // ============================================================
             // Dywanik
