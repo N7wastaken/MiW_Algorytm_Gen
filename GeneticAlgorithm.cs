@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Globalization;
 
 namespace AlGen
 {
@@ -6,8 +9,42 @@ namespace AlGen
     {
         private Random los = new Random();
 
+        // =======================================================================
+        // POLA DO WYCZYTYWANIA DANYCH (zadanie 2: SINUS)
+        // =======================================================================
+        private List<double> sinusX = new List<double>();
+        private List<double> sinusY = new List<double>();
+
+        /// <summary>
+        /// Metoda do wczytania bazy próbek (x, y) z pliku tekstowego do list sinusX i sinusY.
+        /// Każda linia w pliku powinna zawierać dwie liczby (x y), rozdzielone spacją lub tabem.
+        /// </summary>
+        /// <param name="sciezkaPliku">Ścieżka do pliku .txt z danymi</param>
+        public void ZaladujDaneSinus(string sciezkaPliku)
+        {
+            sinusX.Clear();
+            sinusY.Clear();
+
+            // Wczytujemy wszystkie linie:
+            string[] linie = File.ReadAllLines(sciezkaPliku);
+            foreach (string linia in linie)
+            {
+                // Rozdziel po białych znakach
+                var tokens = linia.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+                if (tokens.Length < 2) 
+                    continue;
+
+                // Parsowanie z kropką dziesiętną
+                double xVal = double.Parse(tokens[0], CultureInfo.InvariantCulture);
+                double yVal = double.Parse(tokens[1], CultureInfo.InvariantCulture);
+
+                sinusX.Add(xVal);
+                sinusY.Add(yVal);
+            }
+        }
+
         // ===============================================================
-        // Zadanie 1 -> Dywanik
+        // Zadanie 1 -> Dywanik (x1,x2 w [0..100])
         // ===============================================================
         public bool[][] InicjalizujDywanik(int wielkoscPopulacji, int bityNaParametr)
         {
@@ -54,7 +91,7 @@ namespace AlGen
                 MutacjaJednopunktowa(child);
                 nowaPop[i] = child;
             }
-            // Elita (najlepszy osobnik)
+            // Elita (najlepszy osobnik) do ostatniego miejsca
             int najlepszyIdx = ZnajdzNajlepszy(starePrzyst);
             nowaPop[n - 1] = (bool[])staraPop[najlepszyIdx].Clone();
 
@@ -63,6 +100,7 @@ namespace AlGen
 
         // ===============================================================
         // Zadanie 2 -> Sinus (3 parametry pa, pb, pc w [0..3])
+        // Zamiast sztywnej tablicy korzystamy z wczytanych sinusX i sinusY
         // ===============================================================
         public bool[][] InicjalizujSinus(int wielkoscPop, int bityNaParametr)
         {
@@ -80,29 +118,29 @@ namespace AlGen
             return populacja;
         }
 
-        // Przykładowa (skrócona) baza testowa:
-        private double[] przykladoweX = { -1.0, -0.8, -0.6 };
-        private double[] przykladoweY = {  0.59554, 0.58813, 0.64181 };
-
+        /// <summary>
+        /// Liczymy SSE (sum of squared errors) względem wczytanych sinusX i sinusY.
+        /// Dla minimalizacji SSE dajemy fitness = -SSE (czyli maksymalizujemy -SSE).
+        /// </summary>
         public double[] ObliczPrzystosowanieSinus(bool[][] populacja, int bityNaParametr)
         {
             double[] fitness = new double[populacja.Length];
+
             for (int i = 0; i < populacja.Length; i++)
             {
-                (double pa, double pb, double pc) =
-                    DekodujTrzyParametry(populacja[i], bityNaParametr, 0, 3);
+                (double pa, double pb, double pc) = DekodujTrzyParametry(populacja[i], bityNaParametr, 0, 3);
 
-                // SSE (Sum of Squared Errors); minimalizujemy -> fitness = -SSE
                 double sse = 0.0;
-                for (int s = 0; s < przykladoweX.Length; s++)
+                // Pętla po wszystkich próbkach z pliku
+                for (int s = 0; s < sinusX.Count; s++)
                 {
-                    double x = przykladoweX[s];
-                    double yTrue = przykladoweY[s];
+                    double x = sinusX[s];
+                    double yTrue = sinusY[s];
                     double pred = pa * Math.Sin(x) + pb * x + pc;
                     double blad = yTrue - pred;
                     sse += blad * blad;
                 }
-                fitness[i] = -sse;
+                fitness[i] = -sse; // chcemy minimalizować SSE => maksymalizujemy -SSE
             }
             return fitness;
         }
@@ -168,6 +206,7 @@ namespace AlGen
             return populacja;
         }
 
+        // Tablice wejść i oczekiwanych wyjść (4 próbki XOR)
         private double[][] xorWejscia =
         {
             new double[]{0,0},
@@ -220,7 +259,7 @@ namespace AlGen
                 nowaPop[i] = child;
             }
 
-            // 4 cross+mut (8..11)
+            // 4 cross + mut (8..11)
             for (int i = 8; i < 12; i += 2)
             {
                 bool[] p1 = SelekcjaTurniejowa(staraPop, starePrzyst, rozmiarTurnieju);
@@ -240,13 +279,19 @@ namespace AlGen
         }
 
         // ===============================================================
-        // Uniwersalne operatory / funkcje pomocnicze
+        // Uniwersalne operatory i pomocnicze (dla wszystkich zadań)
         // ===============================================================
+
+        /// <summary>
+        /// Selekcja turniejowa (maxymalizujemy fitness).
+        /// Zwraca *kopię* wybranego osobnika (bool[]).
+        /// </summary>
         private bool[] SelekcjaTurniejowa(bool[][] populacja, double[] przystosowanie, int k)
         {
             double najlepsze = double.MinValue;
             bool[] wybrany = null;
             int n = populacja.Length;
+
             for (int i = 0; i < k; i++)
             {
                 int idx = los.Next(n);
@@ -283,9 +328,10 @@ namespace AlGen
         private (bool[], bool[]) KrzyzowanieJednopunktowe(bool[] p1, bool[] p2)
         {
             int dl = p1.Length;
-            int punkt = los.Next(1, dl);
+            int punkt = los.Next(1, dl);  // losujemy punkt cięcia
             bool[] c1 = new bool[dl];
             bool[] c2 = new bool[dl];
+
             for (int i = 0; i < punkt; i++)
             {
                 c1[i] = p1[i];
@@ -299,7 +345,7 @@ namespace AlGen
             return (c1, c2);
         }
 
-        // Dekodowanie parametru x1, x2
+        // Dekodowanie parametru (x1, x2) w [minVal..maxVal]
         public (double, double) DekodujDwaParametry(bool[] bity, int bpp, double minVal, double maxVal)
         {
             int wart1 = 0, wart2 = 0;
@@ -314,7 +360,7 @@ namespace AlGen
             return (x1, x2);
         }
 
-        // Dekodowanie 3 parametrów (sinus)
+        // Dekodowanie 3 parametrów (pa, pb, pc) w [minV..maxV]
         public (double, double, double) DekodujTrzyParametry(bool[] bity, int bpp, double minV, double maxV)
         {
             double p1 = DekodujJeden(bity, 0, bpp, minV, maxV);
@@ -334,7 +380,7 @@ namespace AlGen
             return mn + (mx - mn) * wart / maks;
         }
 
-        // Dekodowanie wag do XOR
+        // Dekodowanie wag do XOR (9 wag w [-10..10])
         public double[] DekodujWagi(bool[] bity, int bpp, int ile, double minW, double maxW)
         {
             double[] wagi = new double[ile];
@@ -345,13 +391,21 @@ namespace AlGen
             return wagi;
         }
 
-        // Prosty XOR: 3 neurony, każdy ma 3 wagi (x1, x2, bias).
-        // Sygmoida -> n1,n2,n3 -> zsumowane, jeśli >1.5 => 1
+        /// <summary>
+        /// Prosty XOR: 3 neurony (każdy ma 3 wagi: w_x1, w_x2, w_bias).
+        /// Sygmoida: n = 1/(1+exp(-sum)), sum > 1.5 => wy=1.0, wpp. 0
+        /// </summary>
         private double PrzepuscXOR(double x1, double x2, double[] w)
         {
+            // w[0], w[1], w[2] -> neuron 1
             double n1 = 1.0 / (1.0 + Math.Exp(-(x1 * w[0] + x2 * w[1] + w[2])));
+
+            // w[3], w[4], w[5] -> neuron 2
             double n2 = 1.0 / (1.0 + Math.Exp(-(x1 * w[3] + x2 * w[4] + w[5])));
+
+            // w[6], w[7], w[8] -> neuron 3
             double n3 = 1.0 / (1.0 + Math.Exp(-(x1 * w[6] + x2 * w[7] + w[8])));
+
             double suma = n1 + n2 + n3;
             return (suma > 1.5) ? 1.0 : 0.0;
         }

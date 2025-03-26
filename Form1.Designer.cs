@@ -30,6 +30,7 @@
         private System.Windows.Forms.TextBox txtTurniejSinus;
         private System.Windows.Forms.Button btnStartSinus;
         private System.Windows.Forms.Button btnStopSinus;
+        private System.Windows.Forms.Button btnLoadSinusData; // <-- Nowy przycisk
         private System.Windows.Forms.TextBox txtWynikiSinus;
 
         // ============= XOR (Zadanie 3) =============
@@ -93,6 +94,7 @@
             this.txtTurniejSinus = new System.Windows.Forms.TextBox();
             this.btnStartSinus = new System.Windows.Forms.Button();
             this.btnStopSinus = new System.Windows.Forms.Button();
+            this.btnLoadSinusData = new System.Windows.Forms.Button(); // nowy
             this.txtWynikiSinus = new System.Windows.Forms.TextBox();
 
             // ------------------------------------------------------------
@@ -235,6 +237,11 @@
             this.btnStopSinus.Location = new System.Drawing.Point(80, 90);
             this.btnStopSinus.Size = new System.Drawing.Size(60, 30);
 
+            // ---- NOWY PRZYCISK do wczytania pliku ----
+            this.btnLoadSinusData.Text = "Wczytaj plik Sinus";
+            this.btnLoadSinusData.Location = new System.Drawing.Point(210, 90);
+            this.btnLoadSinusData.Size = new System.Drawing.Size(110, 30);
+
             this.grpSinus.Controls.Add(this.lblPopulacjaSinus);
             this.grpSinus.Controls.Add(this.txtPopulacjaSinus);
             this.grpSinus.Controls.Add(this.lblBitySinus);
@@ -245,6 +252,7 @@
             this.grpSinus.Controls.Add(this.txtTurniejSinus);
             this.grpSinus.Controls.Add(this.btnStartSinus);
             this.grpSinus.Controls.Add(this.btnStopSinus);
+            this.grpSinus.Controls.Add(this.btnLoadSinusData); // dodany do kontrolek
 
             this.txtWynikiSinus.Multiline = true;
             this.txtWynikiSinus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;

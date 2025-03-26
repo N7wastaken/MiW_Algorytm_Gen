@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AlGen
 {
@@ -8,13 +9,13 @@ namespace AlGen
     {
         private AlgorytmGenetyczny ga;
 
-        // ===================== Dywanik =====================
+        // ===================== DYWANIK =====================
         private bool[][] populacjaDywanik;
         private double[] przystDywanik;
         private int licznikIterDywanik;
         private int maxIterDywanik;
 
-        // ===================== Sinus =====================
+        // ===================== SINUS =====================
         private bool[][] populacjaSinus;
         private double[] przystSinus;
         private int licznikIterSinus;
@@ -32,20 +33,64 @@ namespace AlGen
 
             ga = new AlgorytmGenetyczny();
 
-            // Dywanik
+            // Jeśli chcesz wczytać domyślnie z "sinusik.txt" (opcjonalnie):
+            // try
+            // {
+            //     ga.ZaladujDaneSinus("sinusik.txt");
+            // }
+            // catch { }
+
+            // Podpinamy obsługę nowego przycisku do eventu:
+            this.btnLoadSinusData.Click += BtnLoadSinusData_Click;
+
+            // Zadanie 1: Dywanik
             btnStartDywanik.Click += BtnStartDywanik_Click;
             btnStopDywanik.Click += BtnStopDywanik_Click;
             timerDywanik.Tick += TimerDywanik_Tick;
 
-            // Sinus
+            // Zadanie 2: Sinus
             btnStartSinus.Click += BtnStartSinus_Click;
             btnStopSinus.Click += BtnStopSinus_Click;
             timerSinus.Tick += TimerSinus_Tick;
 
-            // XOR
+            // Zadanie 3: XOR
             btnStartXOR.Click += BtnStartXOR_Click;
             btnStopXOR.Click += BtnStopXOR_Click;
             timerXOR.Tick += TimerXOR_Tick;
+        }
+
+        // =====================================================================
+        // OBSŁUGA PRZYCISKU - Wczytanie pliku z danymi do sinus
+        // =====================================================================
+        private void BtnLoadSinusData_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Wybierz plik z danymi do sinus";
+                dlg.Filter = "Pliki tekstowe|*.txt|Wszystkie pliki|*.*";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        ga.ZaladujDaneSinus(dlg.FileName);
+                        MessageBox.Show(
+                            "Wczytano dane z pliku:\n" + dlg.FileName,
+                            "Sukces", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Information
+                        );
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            "Błąd podczas wczytywania: " + ex.Message,
+                            "Błąd",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
+                }
+            }
         }
 
         // =====================================================================
@@ -60,7 +105,7 @@ namespace AlGen
             maxIterDywanik = int.Parse(txtIteracjeDywanik.Text);
             int turniej = int.Parse(txtTurniejDywanik.Text);
 
-            // Inicjalizacja
+            // Inicjalizacja populacji
             populacjaDywanik = ga.InicjalizujDywanik(pop, bity);
             przystDywanik = ga.ObliczPrzystosowanieDywanik(populacjaDywanik, bity);
 
@@ -196,7 +241,7 @@ namespace AlGen
 
             int bestIdx = ga.ZnajdzNajlepszy(przystXOR);
             double[] bestWagi = ga.DekodujWagi(populacjaXOR[bestIdx], bity, 9, -10, 10);
-            string wagiText = string.Join("; ", bestWagi.Select((w, i) => $"w{i}={w:F3}"));
+            string wagiText = string.Join("; ", bestWagi.Select((w, i2) => $"w{i2}={w:F3}"));
 
             txtWynikiXOR.AppendText(
                 $"Start | Najl={Max(przystXOR):F4} | Sr={Avg(przystXOR):F4} | bestWagi=({wagiText})\r\n"
@@ -230,7 +275,7 @@ namespace AlGen
 
             int bestIdx = ga.ZnajdzNajlepszy(przystXOR);
             double[] bestWagi = ga.DekodujWagi(populacjaXOR[bestIdx], st.bity, 9, -10, 10);
-            string wagiText = string.Join("; ", bestWagi.Select((w, i) => $"w{i}={w:F3}"));
+            string wagiText = string.Join("; ", bestWagi.Select((w, i2) => $"w{i2}={w:F3}"));
 
             txtWynikiXOR.AppendText(
                 $"Iter={licznikIterXOR} | Najl={Max(przystXOR):F4} | Sr={Avg(przystXOR):F4} | bestWagi=({wagiText})\r\n"
@@ -244,7 +289,7 @@ namespace AlGen
         }
 
         // =====================================================================
-        // Pomocnicze
+        // Pomocnicze funkcje do wyświetlania
         // =====================================================================
         private double Max(double[] tab) => tab.Max();
         private double Avg(double[] tab) => tab.Average();
