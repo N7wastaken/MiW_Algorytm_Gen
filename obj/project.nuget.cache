@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iUisK8JpFac=",
+  "dgSpecHash": "qdnj/0T3MV4=",
   "success": true,
-  "projectFilePath": "c:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj",
+  "projectFilePath": "C:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\arkadiusz.mulkityn\\.nuget\\packages\\system.windows.forms.datavisualization\\1.0.0-prerelease.20110.1\\system.windows.forms.datavisualization.1.0.0-prerelease.20110.1.nupkg.sha512"
   ],
