@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
-using System.IO;
 
 namespace AlGen
 {
@@ -9,59 +8,54 @@ namespace AlGen
     {
         private AlgorytmGenetyczny ga;
 
-        // ===================== DYWANIK =====================
+        // ========== Pola dla Zadania 1 (Dywanik) ==========
         private bool[][] populacjaDywanik;
         private double[] przystDywanik;
         private int licznikIterDywanik;
         private int maxIterDywanik;
+        private int bityDywanik, turniejDywanik;
 
-        // ===================== SINUS =====================
+        // ========== Pola dla Zadania 2 (Sinus) ==========
         private bool[][] populacjaSinus;
         private double[] przystSinus;
         private int licznikIterSinus;
         private int maxIterSinus;
+        private int bitySinus, turniejSinus;
 
-        // ===================== XOR =====================
+        // ========== Pola dla Zadania 3 (XOR) ==========
         private bool[][] populacjaXOR;
         private double[] przystXOR;
         private int licznikIterXOR;
         private int maxIterXOR;
+        private int bityXOR, turniejXOR;
 
         public Form1()
         {
             InitializeComponent();
-
             ga = new AlgorytmGenetyczny();
 
-            // Jeśli chcesz wczytać domyślnie z "sinusik.txt" (opcjonalnie):
-            // try
-            // {
-            //     ga.ZaladujDaneSinus("sinusik.txt");
-            // }
-            // catch { }
+            // Przycisk do ładowania danych Sinus
+            btnLoadSinusData.Click += BtnLoadSinusData_Click;
 
-            // Podpinamy obsługę nowego przycisku do eventu:
-            this.btnLoadSinusData.Click += BtnLoadSinusData_Click;
-
-            // Zadanie 1: Dywanik
+            // Dywanik
             btnStartDywanik.Click += BtnStartDywanik_Click;
             btnStopDywanik.Click += BtnStopDywanik_Click;
             timerDywanik.Tick += TimerDywanik_Tick;
 
-            // Zadanie 2: Sinus
+            // Sinus
             btnStartSinus.Click += BtnStartSinus_Click;
             btnStopSinus.Click += BtnStopSinus_Click;
             timerSinus.Tick += TimerSinus_Tick;
 
-            // Zadanie 3: XOR
+            // XOR
             btnStartXOR.Click += BtnStartXOR_Click;
             btnStopXOR.Click += BtnStopXOR_Click;
             timerXOR.Tick += TimerXOR_Tick;
         }
 
-        // =====================================================================
-        // OBSŁUGA PRZYCISKU - Wczytanie pliku z danymi do sinus
-        // =====================================================================
+        // ---------------------------------------------------------------------
+        // Obsługa przycisku do wczytania pliku z danymi dla sinus
+        // ---------------------------------------------------------------------
         private void BtnLoadSinusData_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new OpenFileDialog())
@@ -73,52 +67,37 @@ namespace AlGen
                     try
                     {
                         ga.ZaladujDaneSinus(dlg.FileName);
-                        MessageBox.Show(
-                            "Wczytano dane z pliku:\n" + dlg.FileName,
-                            "Sukces", 
-                            MessageBoxButtons.OK, 
-                            MessageBoxIcon.Information
-                        );
+                        MessageBox.Show("Wczytano dane z pliku:\n" + dlg.FileName,
+                                        "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(
-                            "Błąd podczas wczytywania: " + ex.Message,
-                            "Błąd",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error
-                        );
+                        MessageBox.Show("Błąd podczas wczytywania: " + ex.Message,
+                                        "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
 
         // =====================================================================
-        // DYWANIK (Zadanie 1)
+        // ZADANIE 1: Dywanik
         // =====================================================================
         private void BtnStartDywanik_Click(object sender, EventArgs e)
         {
             txtWynikiDywanik.Clear();
 
-            int pop = int.Parse(txtPopulacjaDywanik.Text);
-            int bity = int.Parse(txtBityDywanik.Text);
+            int rozmiarPopulacji = int.Parse(txtPopulacjaDywanik.Text);
+            bityDywanik = int.Parse(txtBityDywanik.Text);
             maxIterDywanik = int.Parse(txtIteracjeDywanik.Text);
-            int turniej = int.Parse(txtTurniejDywanik.Text);
+            turniejDywanik = int.Parse(txtTurniejDywanik.Text);
 
-            // Inicjalizacja populacji
-            populacjaDywanik = ga.InicjalizujDywanik(pop, bity);
-            przystDywanik = ga.ObliczPrzystosowanieDywanik(populacjaDywanik, bity);
-
+            // Inicjalizacja
+            populacjaDywanik = ga.InicjalizujDywanik(rozmiarPopulacji, bityDywanik);
+            przystDywanik = ga.ObliczPrzystosowanieDywanik(populacjaDywanik, bityDywanik);
             licznikIterDywanik = 0;
 
-            int bestIdx = ga.ZnajdzNajlepszy(przystDywanik);
-            (double bestX1, double bestX2) = ga.DekodujDwaParametry(populacjaDywanik[bestIdx], bity, 0, 100);
-
-            txtWynikiDywanik.AppendText(
-                $"Start | Najl={Max(przystDywanik):F4} | Sr={Avg(przystDywanik):F4} | bestX1={bestX1:F4} | bestX2={bestX2:F4}\r\n"
-            );
-
-            timerDywanik.Tag = new DywanikStan { bity = bity, turniej = turniej };
+            // Wypisanie stanu początkowego
+            WypiszDywanik("Start");
             timerDywanik.Start();
         }
 
@@ -130,8 +109,6 @@ namespace AlGen
 
         private void TimerDywanik_Tick(object sender, EventArgs e)
         {
-            var st = (DywanikStan)timerDywanik.Tag;
-
             licznikIterDywanik++;
             if (licznikIterDywanik > maxIterDywanik)
             {
@@ -140,49 +117,44 @@ namespace AlGen
                 return;
             }
 
-            bool[][] nowaPop = ga.IteracjaDywanik(populacjaDywanik, przystDywanik, st.bity, st.turniej);
-            populacjaDywanik = nowaPop;
-            przystDywanik = ga.ObliczPrzystosowanieDywanik(populacjaDywanik, st.bity);
+            // Kolejna iteracja
+            populacjaDywanik = ga.IteracjaDywanik(populacjaDywanik, przystDywanik, bityDywanik, turniejDywanik);
+            przystDywanik = ga.ObliczPrzystosowanieDywanik(populacjaDywanik, bityDywanik);
 
+            WypiszDywanik($"Iter={licznikIterDywanik}");
+        }
+
+        private void WypiszDywanik(string prefix)
+        {
             int bestIdx = ga.ZnajdzNajlepszy(przystDywanik);
-            (double bestX1, double bestX2) = ga.DekodujDwaParametry(populacjaDywanik[bestIdx], st.bity, 0, 100);
+            (double x1, double x2) = ga.DekodujDwaParametry(populacjaDywanik[bestIdx], bityDywanik, 0, 100);
+
+            double najlepsze = przystDywanik.Max();
+            double srednia = przystDywanik.Average();
 
             txtWynikiDywanik.AppendText(
-                $"Iter={licznikIterDywanik} | Najl={Max(przystDywanik):F4} | Sr={Avg(przystDywanik):F4} | bestX1={bestX1:F4} | bestX2={bestX2:F4}\r\n"
+                $"{prefix} | Najl={najlepsze:F4} | Sr={srednia:F4} | bestX1={x1:F2}, bestX2={x2:F2}\r\n"
             );
         }
 
-        private class DywanikStan
-        {
-            public int bity;
-            public int turniej;
-        }
-
         // =====================================================================
-        // SINUS (Zadanie 2)
+        // ZADANIE 2: Sinus
         // =====================================================================
         private void BtnStartSinus_Click(object sender, EventArgs e)
         {
             txtWynikiSinus.Clear();
 
-            int pop = int.Parse(txtPopulacjaSinus.Text);
-            int bity = int.Parse(txtBitySinus.Text);
+            int rozmiarPopulacji = int.Parse(txtPopulacjaSinus.Text);
+            bitySinus = int.Parse(txtBitySinus.Text);
             maxIterSinus = int.Parse(txtIteracjeSinus.Text);
-            int turniej = int.Parse(txtTurniejSinus.Text);
+            turniejSinus = int.Parse(txtTurniejSinus.Text);
 
-            populacjaSinus = ga.InicjalizujSinus(pop, bity);
-            przystSinus = ga.ObliczPrzystosowanieSinus(populacjaSinus, bity);
-
+            // Inicjalizacja
+            populacjaSinus = ga.InicjalizujSinus(rozmiarPopulacji, bitySinus);
+            przystSinus = ga.ObliczPrzystosowanieSinus(populacjaSinus, bitySinus);
             licznikIterSinus = 0;
 
-            int bestIdx = ga.ZnajdzNajlepszy(przystSinus);
-            (double pa, double pb, double pc) = ga.DekodujTrzyParametry(populacjaSinus[bestIdx], bity, 0, 3);
-
-            txtWynikiSinus.AppendText(
-                $"Start | Najl={Max(przystSinus):F4} | Sr={Avg(przystSinus):F4} | bestPa={pa:F4} | bestPb={pb:F4} | bestPc={pc:F4}\r\n"
-            );
-
-            timerSinus.Tag = new SinusStan { bity = bity, turniej = turniej };
+            WypiszSinus("Start");
             timerSinus.Start();
         }
 
@@ -194,8 +166,6 @@ namespace AlGen
 
         private void TimerSinus_Tick(object sender, EventArgs e)
         {
-            var st = (SinusStan)timerSinus.Tag;
-
             licznikIterSinus++;
             if (licznikIterSinus > maxIterSinus)
             {
@@ -204,50 +174,43 @@ namespace AlGen
                 return;
             }
 
-            bool[][] nowa = ga.IteracjaSinus(populacjaSinus, przystSinus, st.bity, st.turniej);
-            populacjaSinus = nowa;
-            przystSinus = ga.ObliczPrzystosowanieSinus(populacjaSinus, st.bity);
+            populacjaSinus = ga.IteracjaSinus(populacjaSinus, przystSinus, bitySinus, turniejSinus);
+            przystSinus = ga.ObliczPrzystosowanieSinus(populacjaSinus, bitySinus);
 
+            WypiszSinus($"Iter={licznikIterSinus}");
+        }
+
+        private void WypiszSinus(string prefix)
+        {
             int bestIdx = ga.ZnajdzNajlepszy(przystSinus);
-            (double pa, double pb, double pc) = ga.DekodujTrzyParametry(populacjaSinus[bestIdx], st.bity, 0, 3);
+            (double pa, double pb, double pc) = ga.DekodujTrzyParametry(populacjaSinus[bestIdx], bitySinus, 0, 3);
+
+            double najlepsze = przystSinus.Max();
+            double srednia = przystSinus.Average();
 
             txtWynikiSinus.AppendText(
-                $"Iter={licznikIterSinus} | Najl={Max(przystSinus):F4} | Sr={Avg(przystSinus):F4} | bestPa={pa:F4} | bestPb={pb:F4} | bestPc={pc:F4}\r\n"
+                $"{prefix} | Najl={najlepsze:F4} | Sr={srednia:F4} | bestPa={pa:F2}, bestPb={pb:F2}, bestPc={pc:F2}\r\n"
             );
         }
 
-        private class SinusStan
-        {
-            public int bity;
-            public int turniej;
-        }
-
         // =====================================================================
-        // XOR (Zadanie 3)
+        // ZADANIE 3: XOR
         // =====================================================================
         private void BtnStartXOR_Click(object sender, EventArgs e)
         {
             txtWynikiXOR.Clear();
 
-            int pop = int.Parse(txtPopulacjaXOR.Text);
-            int bity = int.Parse(txtBityXOR.Text);
+            int rozmiarPopulacji = int.Parse(txtPopulacjaXOR.Text);
+            bityXOR = int.Parse(txtBityXOR.Text);
             maxIterXOR = int.Parse(txtIteracjeXOR.Text);
-            int turniej = int.Parse(txtTurniejXOR.Text);
+            turniejXOR = int.Parse(txtTurniejXOR.Text);
 
-            populacjaXOR = ga.InicjalizujXOR(pop, bity);
-            przystXOR = ga.ObliczPrzystosowanieXOR(populacjaXOR, bity);
-
+            // Inicjalizacja
+            populacjaXOR = ga.InicjalizujXOR(rozmiarPopulacji, bityXOR);
+            przystXOR = ga.ObliczPrzystosowanieXOR(populacjaXOR, bityXOR);
             licznikIterXOR = 0;
 
-            int bestIdx = ga.ZnajdzNajlepszy(przystXOR);
-            double[] bestWagi = ga.DekodujWagi(populacjaXOR[bestIdx], bity, 9, -10, 10);
-            string wagiText = string.Join("; ", bestWagi.Select((w, i2) => $"w{i2}={w:F3}"));
-
-            txtWynikiXOR.AppendText(
-                $"Start | Najl={Max(przystXOR):F4} | Sr={Avg(przystXOR):F4} | bestWagi=({wagiText})\r\n"
-            );
-
-            timerXOR.Tag = new XORStan { bity = bity, turniej = turniej };
+            WypiszXOR("Start");
             timerXOR.Start();
         }
 
@@ -259,8 +222,6 @@ namespace AlGen
 
         private void TimerXOR_Tick(object sender, EventArgs e)
         {
-            var st = (XORStan)timerXOR.Tag;
-
             licznikIterXOR++;
             if (licznikIterXOR > maxIterXOR)
             {
@@ -269,29 +230,26 @@ namespace AlGen
                 return;
             }
 
-            bool[][] nowa = ga.IteracjaXOR(populacjaXOR, przystXOR, st.bity, st.turniej);
-            populacjaXOR = nowa;
-            przystXOR = ga.ObliczPrzystosowanieXOR(populacjaXOR, st.bity);
+            populacjaXOR = ga.IteracjaXOR(populacjaXOR, przystXOR, bityXOR, turniejXOR);
+            przystXOR = ga.ObliczPrzystosowanieXOR(populacjaXOR, bityXOR);
 
+            WypiszXOR($"Iter={licznikIterXOR}");
+        }
+
+        private void WypiszXOR(string prefix)
+        {
             int bestIdx = ga.ZnajdzNajlepszy(przystXOR);
-            double[] bestWagi = ga.DekodujWagi(populacjaXOR[bestIdx], st.bity, 9, -10, 10);
-            string wagiText = string.Join("; ", bestWagi.Select((w, i2) => $"w{i2}={w:F3}"));
+            double[] bestWagi = ga.DekodujWagi(populacjaXOR[bestIdx], bityXOR, 9, -10, 10);
+
+            double najlepsze = przystXOR.Max();
+            double srednia = przystXOR.Average();
+
+            // Sklejanie wag do tekstu
+            string wagiText = string.Join("; ", bestWagi.Select((w, i) => $"w{i}={w:F3}"));
 
             txtWynikiXOR.AppendText(
-                $"Iter={licznikIterXOR} | Najl={Max(przystXOR):F4} | Sr={Avg(przystXOR):F4} | bestWagi=({wagiText})\r\n"
+                $"{prefix} | Najl={najlepsze:F4} | Sr={srednia:F4} | bestWagi=({wagiText})\r\n"
             );
         }
-
-        private class XORStan
-        {
-            public int bity;
-            public int turniej;
-        }
-
-        // =====================================================================
-        // Pomocnicze funkcje do wyświetlania
-        // =====================================================================
-        private double Max(double[] tab) => tab.Max();
-        private double Avg(double[] tab) => tab.Average();
     }
 }
