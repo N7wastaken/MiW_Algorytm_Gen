@@ -189,6 +189,7 @@
             this.txtWynikiDywanik.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtWynikiDywanik.Location = new System.Drawing.Point(10, 160);
             this.txtWynikiDywanik.Size = new System.Drawing.Size(340, 150);
+            this.txtWynikiDywanik.ReadOnly = true; // <-- DODANE
 
             // ============================================================
             // Sinus
@@ -252,12 +253,13 @@
             this.grpSinus.Controls.Add(this.txtTurniejSinus);
             this.grpSinus.Controls.Add(this.btnStartSinus);
             this.grpSinus.Controls.Add(this.btnStopSinus);
-            this.grpSinus.Controls.Add(this.btnLoadSinusData); // dodany do kontrolek
+            this.grpSinus.Controls.Add(this.btnLoadSinusData);
 
             this.txtWynikiSinus.Multiline = true;
             this.txtWynikiSinus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtWynikiSinus.Location = new System.Drawing.Point(360, 160);
             this.txtWynikiSinus.Size = new System.Drawing.Size(340, 150);
+            this.txtWynikiSinus.ReadOnly = true; // <-- DODANE
 
             // ============================================================
             // XOR
@@ -321,6 +323,7 @@
             this.txtWynikiXOR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtWynikiXOR.Location = new System.Drawing.Point(710, 160);
             this.txtWynikiXOR.Size = new System.Drawing.Size(340, 150);
+            this.txtWynikiXOR.ReadOnly = true; // <-- DODANE
 
             // ------------------------------------------------------------
             // Ustawienia timerów
