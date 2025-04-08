@@ -128,7 +128,7 @@ namespace AlGen
                 {
                     double x = sinusX[s];
                     double yTrue = sinusY[s];
-                    double pred = pa * Math.Sin(x) + pb * x + pc;
+                    double pred = pa * Math.Sin(pb * x + pc);
                     double blad = yTrue - pred;
                     sse += blad * blad;
                 }
