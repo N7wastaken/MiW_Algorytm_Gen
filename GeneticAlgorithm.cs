@@ -132,6 +132,8 @@ namespace AlGen
                     double blad = yTrue - pred;
                     sse += blad * blad;
                 }
+                // fitness = -SSE, bo standardowo nasz system maksymalizuje
+                // a my chcemy minimalizować SSE.
                 fitness[i] = -sse; 
             }
             return fitness;
@@ -142,7 +144,8 @@ namespace AlGen
             int n = staraPop.Length; 
             bool[][] nowaPop = new bool[n][];
 
-            // 4 crossing parami (0-1, 2-3)
+            // 4 osobniki z crossing (tworzone parami)
+            // (0..3) => p1+p2 -> c1,c2
             for (int i = 0; i < 4; i += 2)
             {
                 bool[] p1 = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
@@ -152,7 +155,7 @@ namespace AlGen
                 nowaPop[i + 1] = c2;
             }
 
-            // 4 mutacje (4..7)
+            // 4 osobniki z selekcji + mutacja (4..7)
             for (int i = 4; i < 8; i++)
             {
                 bool[] child = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
@@ -160,7 +163,7 @@ namespace AlGen
                 nowaPop[i] = child;
             }
 
-            // 4 cross + mut (8..11)
+            // 4 osobniki z selekcji + crossing + mutacja (8..11)
             for (int i = 8; i < 12; i += 2)
             {
                 bool[] p1 = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
@@ -172,7 +175,7 @@ namespace AlGen
                 nowaPop[i + 1] = c2;
             }
 
-            // 1 elita
+            // 1 najlepszy (elita)
             int best = ZnajdzNajlepszy(starePrzyst);
             nowaPop[12] = (bool[])staraPop[best].Clone();
 

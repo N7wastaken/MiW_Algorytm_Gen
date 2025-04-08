@@ -129,7 +129,7 @@ namespace AlGen
             int bestIdx = ga.ZnajdzNajlepszy(przystDywanik);
             (double x1, double x2) = ga.DekodujDwaParametry(populacjaDywanik[bestIdx], bityDywanik, 0, 100);
 
-            double najlepsze = przystDywanik.Max();
+            double najlepsze = przystDywanik.Max();   // to jest już "wyższe = lepsze"
             double srednia = przystDywanik.Average();
 
             txtWynikiDywanik.AppendText(
@@ -154,6 +154,7 @@ namespace AlGen
             przystSinus = ga.ObliczPrzystosowanieSinus(populacjaSinus, bitySinus);
             licznikIterSinus = 0;
 
+            // Wypisanie stanu początkowego
             WypiszSinus("Start");
             timerSinus.Start();
         }
@@ -180,16 +181,26 @@ namespace AlGen
             WypiszSinus($"Iter={licznikIterSinus}");
         }
 
+        // --- Tu istotna poprawka wyświetlania SSE (funkcja przystosowania) ---
         private void WypiszSinus(string prefix)
         {
+            // fitness[i] = -SSE, więc:
+            // najlepszy fitness oznacza minimalne SSE
             int bestIdx = ga.ZnajdzNajlepszy(przystSinus);
+
+            // Odczytujemy parametry
             (double pa, double pb, double pc) = ga.DekodujTrzyParametry(populacjaSinus[bestIdx], bitySinus, 0, 3);
 
-            double najlepsze = przystSinus.Max();
-            double srednia = przystSinus.Average();
+            // Najlepsza wartość fitness (negative SSE)
+            double bestFitness = przystSinus.Max();
+            double avgFitness = przystSinus.Average();
+
+            // Przekształcamy, by zobaczyć faktyczną wartość SSE:
+            double bestSSE = -bestFitness;      // bo fitness = -SSE
+            double avgSSE  = -avgFitness;
 
             txtWynikiSinus.AppendText(
-                $"{prefix} | Najl={najlepsze:F4} | Sr={srednia:F4} | bestPa={pa:F2}, bestPb={pb:F2}, bestPc={pc:F2}\r\n"
+                $"{prefix} | Najl(SSE)={bestSSE:F4} | Sr(SSE)={avgSSE:F4} | bestPa={pa:F2}, bestPb={pb:F2}, bestPc={pc:F2}\r\n"
             );
         }
 
@@ -241,7 +252,7 @@ namespace AlGen
             int bestIdx = ga.ZnajdzNajlepszy(przystXOR);
             double[] bestWagi = ga.DekodujWagi(populacjaXOR[bestIdx], bityXOR, 9, -10, 10);
 
-            double najlepsze = przystXOR.Max();
+            double najlepsze = przystXOR.Max();  // to jest -SSE, więc "większe" = lepsze
             double srednia = przystXOR.Average();
 
             // Sklejanie wag do tekstu

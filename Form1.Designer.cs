@@ -30,7 +30,7 @@
         private System.Windows.Forms.TextBox txtTurniejSinus;
         private System.Windows.Forms.Button btnStartSinus;
         private System.Windows.Forms.Button btnStopSinus;
-        private System.Windows.Forms.Button btnLoadSinusData; // <-- Nowy przycisk
+        private System.Windows.Forms.Button btnLoadSinusData; 
         private System.Windows.Forms.TextBox txtWynikiSinus;
 
         // ============= XOR (Zadanie 3) =============
@@ -94,7 +94,7 @@
             this.txtTurniejSinus = new System.Windows.Forms.TextBox();
             this.btnStartSinus = new System.Windows.Forms.Button();
             this.btnStopSinus = new System.Windows.Forms.Button();
-            this.btnLoadSinusData = new System.Windows.Forms.Button(); // nowy
+            this.btnLoadSinusData = new System.Windows.Forms.Button();
             this.txtWynikiSinus = new System.Windows.Forms.TextBox();
 
             // ------------------------------------------------------------
@@ -189,7 +189,7 @@
             this.txtWynikiDywanik.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtWynikiDywanik.Location = new System.Drawing.Point(10, 160);
             this.txtWynikiDywanik.Size = new System.Drawing.Size(340, 150);
-            this.txtWynikiDywanik.ReadOnly = true; // <-- DODANE
+            this.txtWynikiDywanik.ReadOnly = true;
 
             // ============================================================
             // Sinus
@@ -238,7 +238,6 @@
             this.btnStopSinus.Location = new System.Drawing.Point(80, 90);
             this.btnStopSinus.Size = new System.Drawing.Size(60, 30);
 
-            // ---- NOWY PRZYCISK do wczytania pliku ----
             this.btnLoadSinusData.Text = "Wczytaj plik Sinus";
             this.btnLoadSinusData.Location = new System.Drawing.Point(210, 90);
             this.btnLoadSinusData.Size = new System.Drawing.Size(110, 30);
@@ -259,7 +258,7 @@
             this.txtWynikiSinus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtWynikiSinus.Location = new System.Drawing.Point(360, 160);
             this.txtWynikiSinus.Size = new System.Drawing.Size(340, 150);
-            this.txtWynikiSinus.ReadOnly = true; // <-- DODANE
+            this.txtWynikiSinus.ReadOnly = true;
 
             // ============================================================
             // XOR
@@ -323,7 +322,7 @@
             this.txtWynikiXOR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtWynikiXOR.Location = new System.Drawing.Point(710, 160);
             this.txtWynikiXOR.Size = new System.Drawing.Size(340, 150);
-            this.txtWynikiXOR.ReadOnly = true; // <-- DODANE
+            this.txtWynikiXOR.ReadOnly = true;
 
             // ------------------------------------------------------------
             // Ustawienia timerów
