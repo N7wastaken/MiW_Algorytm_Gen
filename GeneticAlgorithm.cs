@@ -17,7 +17,6 @@ namespace AlGen
 
         /// <summary>
         /// Wczytanie próbek (x, y) do list sinusX, sinusY z pliku .txt
-        /// Każda linia w formacie: x y
         /// </summary>
         public void ZaladujDaneSinus(string sciezkaPliku)
         {
@@ -39,14 +38,14 @@ namespace AlGen
         }
 
         // ===============================================================
-        // Zadanie 1 -> Dywanik (x1,x2 w zakresie [0..100])
+        // Zadanie 1 (Dywanik)
         // ===============================================================
         public bool[][] InicjalizujDywanik(int rozmiarPopulacji, int bityNaParametr)
         {
             bool[][] populacja = new bool[rozmiarPopulacji][];
             for (int i = 0; i < rozmiarPopulacji; i++)
             {
-                bool[] osobnik = new bool[2 * bityNaParametr]; // x1 i x2
+                bool[] osobnik = new bool[2 * bityNaParametr];
                 for (int j = 0; j < osobnik.Length; j++)
                     osobnik[j] = (rnd.NextDouble() < 0.5);
 
@@ -68,7 +67,8 @@ namespace AlGen
                     + Math.Sin(0.05 * x2)
                     + 0.4 * Math.Sin(0.15 * x1) * Math.Sin(0.15 * x2);
 
-                wyniki[i] = wartosc;  // Maksymalizujemy
+                // maksymalizacja
+                wyniki[i] = wartosc;
             }
             return wyniki;
         }
@@ -86,15 +86,15 @@ namespace AlGen
                 nowaPop[i] = child;
             }
 
-            // Elita (najlepszy osobnik)
-            int najlepszyIdx = ZnajdzNajlepszy(starePrzyst);
-            nowaPop[n - 1] = (bool[])staraPop[najlepszyIdx].Clone();
+            // Elita
+            int bestIdx = ZnajdzNajlepszy(starePrzyst);
+            nowaPop[n - 1] = (bool[])staraPop[bestIdx].Clone();
 
             return nowaPop;
         }
 
         // ===============================================================
-        // Zadanie 2 -> Sinus (3 parametry pa, pb, pc w [0..3])
+        // Zadanie 2 (Sinus)
         // ===============================================================
         public bool[][] InicjalizujSinus(int rozmiarPop, int bityNaParametr)
         {
@@ -112,8 +112,7 @@ namespace AlGen
         }
 
         /// <summary>
-        /// Liczymy SSE względem sinusX i sinusY. 
-        /// Minimalizujemy SSE => maksymalizujemy -SSE.
+        /// Obliczamy SSE i zapisujemy fitness = -SSE (bo alg. gen. maksymalizuje)
         /// </summary>
         public double[] ObliczPrzystosowanieSinus(bool[][] populacja, int bityNaParametr)
         {
@@ -132,8 +131,6 @@ namespace AlGen
                     double blad = yTrue - pred;
                     sse += blad * blad;
                 }
-                // fitness = -SSE, bo standardowo nasz system maksymalizuje
-                // a my chcemy minimalizować SSE.
                 fitness[i] = -sse; 
             }
             return fitness;
@@ -141,11 +138,10 @@ namespace AlGen
 
         public bool[][] IteracjaSinus(bool[][] staraPop, double[] starePrzyst, int bityNaParametr, int turniej)
         {
-            int n = staraPop.Length; 
+            int n = staraPop.Length;
             bool[][] nowaPop = new bool[n][];
 
-            // 4 osobniki z crossing (tworzone parami)
-            // (0..3) => p1+p2 -> c1,c2
+            // 4 crossing (parami)
             for (int i = 0; i < 4; i += 2)
             {
                 bool[] p1 = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
@@ -155,7 +151,7 @@ namespace AlGen
                 nowaPop[i + 1] = c2;
             }
 
-            // 4 osobniki z selekcji + mutacja (4..7)
+            // 4 mutacje (4..7)
             for (int i = 4; i < 8; i++)
             {
                 bool[] child = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
@@ -163,7 +159,7 @@ namespace AlGen
                 nowaPop[i] = child;
             }
 
-            // 4 osobniki z selekcji + crossing + mutacja (8..11)
+            // 4 crossing + mutacja (8..11)
             for (int i = 8; i < 12; i += 2)
             {
                 bool[] p1 = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
@@ -175,7 +171,7 @@ namespace AlGen
                 nowaPop[i + 1] = c2;
             }
 
-            // 1 najlepszy (elita)
+            // elita
             int best = ZnajdzNajlepszy(starePrzyst);
             nowaPop[12] = (bool[])staraPop[best].Clone();
 
@@ -183,10 +179,11 @@ namespace AlGen
         }
 
         // ===============================================================
-        // Zadanie 3 -> XOR (9 wag w [-10..10])
+        // Zadanie 3 (XOR)
         // ===============================================================
         public bool[][] InicjalizujXOR(int rozmiarPop, int bityNaWage)
         {
+            // 9 wag (3 neurony * 3 wagi na neuron)
             int dl = 9 * bityNaWage;
             bool[][] populacja = new bool[rozmiarPop][];
             for (int i = 0; i < rozmiarPop; i++)
@@ -200,6 +197,7 @@ namespace AlGen
             return populacja;
         }
 
+        // Cztery próbki do XOR
         private double[][] xorWejscia =
         {
             new double[]{0,0},
@@ -214,16 +212,19 @@ namespace AlGen
             double[] fit = new double[populacja.Length];
             for (int i = 0; i < populacja.Length; i++)
             {
+                // dekodujemy 9 wag do tablicy wagi[]
                 double[] wagi = DekodujWagi(populacja[i], bityNaWage, 9, -10, 10);
 
                 double sse = 0.0;
+                // Sum of squared errors over 4 samples
                 for (int k = 0; k < 4; k++)
                 {
                     double wy = PrzepuscXOR(xorWejscia[k][0], xorWejscia[k][1], wagi);
                     double blad = xorOczekiwane[k] - wy;
                     sse += blad * blad;
                 }
-                fit[i] = -sse; 
+                // Minimizing SSE => maximizing -SSE
+                fit[i] = -sse;
             }
             return fit;
         }
@@ -251,7 +252,7 @@ namespace AlGen
                 nowaPop[i] = child;
             }
 
-            // 4 cross + mut
+            // 4 crossing + mut
             for (int i = 8; i < 12; i += 2)
             {
                 bool[] p1 = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
@@ -263,7 +264,7 @@ namespace AlGen
                 nowaPop[i + 1] = c2;
             }
 
-            // elita
+            // 1 elita (najlepszy)
             int best = ZnajdzNajlepszy(starePrzyst);
             nowaPop[12] = (bool[])staraPop[best].Clone();
 
@@ -271,7 +272,7 @@ namespace AlGen
         }
 
         // ====================================================================
-        // Uniwersalne metody pomocnicze
+        // Metody wspólne
         // ====================================================================
         private bool[] SelekcjaTurniejowa(bool[][] populacja, double[] przyst, int rozmiarTurnieju)
         {
@@ -332,7 +333,9 @@ namespace AlGen
             return (c1, c2);
         }
 
-        // Dekodowanie 2 parametrów w [minVal..maxVal]
+        // -------------------------
+        // Dekodowanie parametrów
+        // -------------------------
         public (double, double) DekodujDwaParametry(bool[] bity, int bpp, double minVal, double maxVal)
         {
             int wart1 = 0, wart2 = 0;
@@ -342,18 +345,16 @@ namespace AlGen
                 wart2 = (wart2 << 1) | (bity[bpp + i] ? 1 : 0);
             }
             int maxKod = (1 << bpp) - 1;
-
             double x1 = minVal + (maxVal - minVal) * wart1 / maxKod;
             double x2 = minVal + (maxVal - minVal) * wart2 / maxKod;
             return (x1, x2);
         }
 
-        // Dekodowanie 3 parametrów w [minV..maxV]
         public (double, double, double) DekodujTrzyParametry(bool[] bity, int bpp, double minV, double maxV)
         {
-            double p1 = DekodujJeden(bity, 0,     bpp, minV, maxV);
-            double p2 = DekodujJeden(bity, bpp,   bpp, minV, maxV);
-            double p3 = DekodujJeden(bity, 2*bpp, bpp, minV, maxV);
+            double p1 = DekodujJeden(bity, 0, bpp, minV, maxV);
+            double p2 = DekodujJeden(bity, bpp, bpp, minV, maxV);
+            double p3 = DekodujJeden(bity, 2 * bpp, bpp, minV, maxV);
             return (p1, p2, p3);
         }
 
@@ -367,25 +368,40 @@ namespace AlGen
             return mn + (mx - mn) * wart / maks;
         }
 
-        // Dekodowanie 9 wag w [minW..maxW]
+        // Dekodowanie tablicy wag (np. 9 wag w [-10..10])
         public double[] DekodujWagi(bool[] bity, int bpp, int ile, double minW, double maxW)
         {
             double[] wagi = new double[ile];
             for (int i = 0; i < ile; i++)
-                wagi[i] = DekodujJeden(bity, i*bpp, bpp, minW, maxW);
+                wagi[i] = DekodujJeden(bity, i * bpp, bpp, minW, maxW);
 
             return wagi;
         }
 
-        // Prosty model XOR przez 3 neurony
+        // -------------------------
+        // Forward pass dla XOR
+        // -------------------------
         private double PrzepuscXOR(double x1, double x2, double[] w)
         {
-            double n1 = 1.0 / (1.0 + Math.Exp(-(x1*w[0] + x2*w[1] + w[2])));
-            double n2 = 1.0 / (1.0 + Math.Exp(-(x1*w[3] + x2*w[4] + w[5])));
-            double n3 = 1.0 / (1.0 + Math.Exp(-(x1*w[6] + x2*w[7] + w[8])));
+            // Mamy 3 neurony, każdy po 3 wagi:
+            // neuron1: w[0], w[1], w[2]
+            // neuron2: w[3], w[4], w[5]
+            // neuron3: w[6], w[7], w[8]
+            // Bias jest zawsze w kolejnej pozycji (np. w[2], w[5], w[8])
 
+            // 1) Każdy neuron -> sigmoida
+            double n1 = Sigmoid(x1 * w[0] + x2 * w[1] + w[2]);
+            double n2 = Sigmoid(x1 * w[3] + x2 * w[4] + w[5]);
+            double n3 = Sigmoid(x1 * w[6] + x2 * w[7] + w[8]);
+
+            // 2) Łączymy wyniki: np. prosta logika – jeżeli (n1+n2+n3) > 1.5 => 1, else 0
             double suma = n1 + n2 + n3;
             return (suma > 1.5) ? 1.0 : 0.0;
+        }
+
+        private double Sigmoid(double s)
+        {
+            return 1.0 / (1.0 + Math.Exp(-s));
         }
     }
 }

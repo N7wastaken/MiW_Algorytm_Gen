@@ -34,27 +34,27 @@ namespace AlGen
             InitializeComponent();
             ga = new AlgorytmGenetyczny();
 
-            // Przycisk do ładowania danych Sinus
+            // Obsługa przycisku do wczytania danych Sinus
             btnLoadSinusData.Click += BtnLoadSinusData_Click;
 
-            // Dywanik
+            // Zadanie 1 (Dywanik)
             btnStartDywanik.Click += BtnStartDywanik_Click;
             btnStopDywanik.Click += BtnStopDywanik_Click;
             timerDywanik.Tick += TimerDywanik_Tick;
 
-            // Sinus
+            // Zadanie 2 (Sinus)
             btnStartSinus.Click += BtnStartSinus_Click;
             btnStopSinus.Click += BtnStopSinus_Click;
             timerSinus.Tick += TimerSinus_Tick;
 
-            // XOR
+            // Zadanie 3 (XOR)
             btnStartXOR.Click += BtnStartXOR_Click;
             btnStopXOR.Click += BtnStopXOR_Click;
             timerXOR.Tick += TimerXOR_Tick;
         }
 
         // ---------------------------------------------------------------------
-        // Obsługa przycisku do wczytania pliku z danymi dla sinus
+        // Wczytanie pliku z danymi do sinus
         // ---------------------------------------------------------------------
         private void BtnLoadSinusData_Click(object sender, EventArgs e)
         {
@@ -129,7 +129,7 @@ namespace AlGen
             int bestIdx = ga.ZnajdzNajlepszy(przystDywanik);
             (double x1, double x2) = ga.DekodujDwaParametry(populacjaDywanik[bestIdx], bityDywanik, 0, 100);
 
-            double najlepsze = przystDywanik.Max();   // to jest już "wyższe = lepsze"
+            double najlepsze = przystDywanik.Max(); // tu "większe=lepsze"
             double srednia = przystDywanik.Average();
 
             txtWynikiDywanik.AppendText(
@@ -181,23 +181,16 @@ namespace AlGen
             WypiszSinus($"Iter={licznikIterSinus}");
         }
 
-        // --- Tu istotna poprawka wyświetlania SSE (funkcja przystosowania) ---
         private void WypiszSinus(string prefix)
         {
-            // fitness[i] = -SSE, więc:
-            // najlepszy fitness oznacza minimalne SSE
             int bestIdx = ga.ZnajdzNajlepszy(przystSinus);
-
-            // Odczytujemy parametry
             (double pa, double pb, double pc) = ga.DekodujTrzyParametry(populacjaSinus[bestIdx], bitySinus, 0, 3);
 
-            // Najlepsza wartość fitness (negative SSE)
-            double bestFitness = przystSinus.Max();
+            double bestFitness = przystSinus.Max();   // -SSE
             double avgFitness = przystSinus.Average();
 
-            // Przekształcamy, by zobaczyć faktyczną wartość SSE:
-            double bestSSE = -bestFitness;      // bo fitness = -SSE
-            double avgSSE  = -avgFitness;
+            double bestSSE = -bestFitness;
+            double avgSSE = -avgFitness;
 
             txtWynikiSinus.AppendText(
                 $"{prefix} | Najl(SSE)={bestSSE:F4} | Sr(SSE)={avgSSE:F4} | bestPa={pa:F2}, bestPb={pb:F2}, bestPc={pc:F2}\r\n"
@@ -221,6 +214,7 @@ namespace AlGen
             przystXOR = ga.ObliczPrzystosowanieXOR(populacjaXOR, bityXOR);
             licznikIterXOR = 0;
 
+            // Stan początkowy
             WypiszXOR("Start");
             timerXOR.Start();
         }
@@ -247,19 +241,24 @@ namespace AlGen
             WypiszXOR($"Iter={licznikIterXOR}");
         }
 
+        // --- GŁÓWNA ZMIANA: wyświetlamy SSE zamiast -SSE ---
         private void WypiszXOR(string prefix)
         {
             int bestIdx = ga.ZnajdzNajlepszy(przystXOR);
             double[] bestWagi = ga.DekodujWagi(populacjaXOR[bestIdx], bityXOR, 9, -10, 10);
 
-            double najlepsze = przystXOR.Max();  // to jest -SSE, więc "większe" = lepsze
-            double srednia = przystXOR.Average();
+            // Współczynnik fitness = -SSE
+            double bestFitness = przystXOR.Max();
+            double avgFitness = przystXOR.Average();
 
-            // Sklejanie wag do tekstu
+            double bestSSE = -bestFitness;
+            double avgSSE = -avgFitness;
+
+            // Wypisujemy wagi oraz SSE
             string wagiText = string.Join("; ", bestWagi.Select((w, i) => $"w{i}={w:F3}"));
 
             txtWynikiXOR.AppendText(
-                $"{prefix} | Najl={najlepsze:F4} | Sr={srednia:F4} | bestWagi=({wagiText})\r\n"
+                $"{prefix} | Najl(SSE)={bestSSE:F4} | Sr(SSE)={avgSSE:F4} | bestWagi=({wagiText})\r\n"
             );
         }
     }

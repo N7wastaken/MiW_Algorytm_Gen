@@ -128,7 +128,7 @@
             this.Text = "AlGen";
 
             // ============================================================
-            // Dywanik
+            // Dywanik (Zadanie 1)
             // ============================================================
             this.grpDywanik.Text = "Zadanie 1 (Dywanik)";
             this.grpDywanik.Location = new System.Drawing.Point(10, 10);
@@ -192,7 +192,7 @@
             this.txtWynikiDywanik.ReadOnly = true;
 
             // ============================================================
-            // Sinus
+            // Sinus (Zadanie 2)
             // ============================================================
             this.grpSinus.Text = "Zadanie 2 (Sinus)";
             this.grpSinus.Location = new System.Drawing.Point(360, 10);
@@ -261,7 +261,7 @@
             this.txtWynikiSinus.ReadOnly = true;
 
             // ============================================================
-            // XOR
+            // XOR (Zadanie 3)
             // ============================================================
             this.grpXOR.Text = "Zadanie 3 (XOR)";
             this.grpXOR.Location = new System.Drawing.Point(710, 10);
@@ -332,7 +332,7 @@
             this.timerXOR.Interval = 500;
 
             // ------------------------------------------------------------
-            // Dodaj grupy + pola wyników do formy
+            // Dodaj kontrolki do formy
             // ------------------------------------------------------------
             this.Controls.Add(this.grpDywanik);
             this.Controls.Add(this.grpSinus);
