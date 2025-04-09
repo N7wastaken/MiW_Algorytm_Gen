@@ -15,9 +15,7 @@ namespace AlGen
         private List<double> sinusX = new List<double>();
         private List<double> sinusY = new List<double>();
 
-        /// <summary>
-        /// Wczytanie próbek (x, y) do list sinusX, sinusY z pliku .txt
-        /// </summary>
+
         public void ZaladujDaneSinus(string sciezkaPliku)
         {
             sinusX.Clear();
@@ -111,9 +109,7 @@ namespace AlGen
             return populacja;
         }
 
-        /// <summary>
-        /// Obliczamy SSE i zapisujemy fitness = -SSE (bo alg. gen. maksymalizuje)
-        /// </summary>
+       
         public double[] ObliczPrzystosowanieSinus(bool[][] populacja, int bityNaParametr)
         {
             double[] fitness = new double[populacja.Length];
@@ -216,14 +212,14 @@ namespace AlGen
                 double[] wagi = DekodujWagi(populacja[i], bityNaWage, 9, -10, 10);
 
                 double sse = 0.0;
-                // Sum of squared errors over 4 samples
+               
                 for (int k = 0; k < 4; k++)
                 {
                     double wy = PrzepuscXOR(xorWejscia[k][0], xorWejscia[k][1], wagi);
                     double blad = xorOczekiwane[k] - wy;
                     sse += blad * blad;
                 }
-                // Minimizing SSE => maximizing -SSE
+             
                 fit[i] = -sse;
             }
             return fit;

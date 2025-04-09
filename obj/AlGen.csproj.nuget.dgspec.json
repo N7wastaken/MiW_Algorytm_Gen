@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj": {}
+    "C:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj": {}
   },
   "projects": {
-    "c:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj": {
+    "C:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj",
+        "projectUniqueName": "C:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj",
         "projectName": "AlGen",
-        "projectPath": "c:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj",
+        "projectPath": "C:\\Users\\arkadiusz.mulkityn\\AlGen\\AlGen.csproj",
         "packagesPath": "C:\\Users\\arkadiusz.mulkityn\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\arkadiusz.mulkityn\\AlGen\\obj\\",
+        "outputPath": "C:\\Users\\arkadiusz.mulkityn\\AlGen\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\arkadiusz.mulkityn\\AppData\\Roaming\\NuGet\\NuGet.Config"
