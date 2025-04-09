@@ -280,7 +280,7 @@ namespace AlGen
             string wagiText = string.Join("; ", bestWagi.Select((w, i) => $"w{i}={w:F3}"));
 
             txtWynikiXOR.AppendText(
-                $"{prefix} | Najl(SSE)={bestSSE:F4} | Sr(SSE)={avgSSE:F4} | bestWagi=({wagiText})\r\n"
+                $"{prefix} | Najl(SSE)={bestSSE:F4} | Sr(SSE)={avgSSE:F4}\r\n"
             );
         }
     }
