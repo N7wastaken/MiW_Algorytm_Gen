@@ -329,7 +329,7 @@
             // ------------------------------------------------------------
             this.timerDywanik.Interval = 500;
             this.timerSinus.Interval = 500;
-            this.timerXOR.Interval = 500;
+            this.timerXOR.Interval = 5;
 
             // ------------------------------------------------------------
             // Dodaj kontrolki do formy

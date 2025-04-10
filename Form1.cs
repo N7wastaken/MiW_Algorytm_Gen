@@ -78,6 +78,7 @@ namespace AlGen
                 }
             }
         }
+
         protected override void WndProc(ref Message m)
         {
             const int WM_SYSCOMMAND = 0x0112;
@@ -101,6 +102,7 @@ namespace AlGen
 
             base.WndProc(ref m);
         }
+
         // =====================================================================
         // ZADANIE 1: Dywanik
         // =====================================================================
@@ -263,7 +265,6 @@ namespace AlGen
             WypiszXOR($"Iter={licznikIterXOR}");
         }
 
-        // --- GŁÓWNA ZMIANA: wyświetlamy SSE zamiast -SSE ---
         private void WypiszXOR(string prefix)
         {
             int bestIdx = ga.ZnajdzNajlepszy(przystXOR);
@@ -280,7 +281,7 @@ namespace AlGen
             string wagiText = string.Join("; ", bestWagi.Select((w, i) => $"w{i}={w:F3}"));
 
             txtWynikiXOR.AppendText(
-                $"{prefix} | Najl(SSE)={bestSSE:F4} | Sr(SSE)={avgSSE:F4}\r\n"
+                $"{prefix} | Najl(SSE)={bestSSE:F4} | Sr(SSE)={avgSSE:F4} | bestWagi=({wagiText})\r\n"
             );
         }
     }
