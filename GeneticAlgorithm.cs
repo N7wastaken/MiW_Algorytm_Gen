@@ -109,7 +109,7 @@ namespace AlGen
             return populacja;
         }
 
-       
+
         public double[] ObliczPrzystosowanieSinus(bool[][] populacja, int bityNaParametr)
         {
             double[] fitness = new double[populacja.Length];
@@ -127,7 +127,7 @@ namespace AlGen
                     double blad = yTrue - pred;
                     sse += blad * blad;
                 }
-                fitness[i] = -sse; 
+                fitness[i] = -sse;
             }
             return fitness;
         }
@@ -201,7 +201,7 @@ namespace AlGen
             new double[]{1,0},
             new double[]{1,1}
         };
-        private double[] xorOczekiwane = {0, 1, 1, 0};
+        private double[] xorOczekiwane = { 0, 1, 1, 0 };
 
         public double[] ObliczPrzystosowanieXOR(bool[][] populacja, int bityNaWage)
         {
@@ -212,59 +212,65 @@ namespace AlGen
                 double[] wagi = DekodujWagi(populacja[i], bityNaWage, 9, -10, 10);
 
                 double sse = 0.0;
-               
+
                 for (int k = 0; k < 4; k++)
                 {
                     double wy = PrzepuscXOR(xorWejscia[k][0], xorWejscia[k][1], wagi);
                     double blad = xorOczekiwane[k] - wy;
                     sse += blad * blad;
                 }
-             
+
                 fit[i] = -sse;
             }
             return fit;
         }
 
-        public bool[][] IteracjaXOR(bool[][] staraPop, double[] starePrzyst, int bityNaWage, int turniej)
+        public bool[][] IteracjaXOR(bool[][] populacja, double[] przystosowanie, int bityNaWage, int rozmiarTurnieju)
         {
-            int n = staraPop.Length;
-            bool[][] nowaPop = new bool[n][];
+            int rozmiarPopulacji = populacja.Length;
 
-            // 4 crossing
-            for (int i = 0; i < 4; i += 2)
-            {
-                bool[] p1 = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
-                bool[] p2 = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
-                (bool[] c1, bool[] c2) = KrzyzowanieJednopunktowe(p1, p2);
-                nowaPop[i] = c1;
-                nowaPop[i + 1] = c2;
-            }
+            
+                // Tworzymy nową populację
+                bool[][] nowaPopulacja = new bool[rozmiarPopulacji][];
 
-            // 4 mutacje
-            for (int i = 4; i < 8; i++)
-            {
-                bool[] child = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
-                MutacjaJednopunktowa(child);
-                nowaPop[i] = child;
-            }
+                // 1) Elitaryzm – zachowujemy najlepszego osobnika
+                int najlepszyIndeks = ZnajdzNajlepszy(przystosowanie);
+                nowaPopulacja[0] = (bool[])populacja[najlepszyIndeks].Clone();
 
-            // 4 crossing + mut
-            for (int i = 8; i < 12; i += 2)
-            {
-                bool[] p1 = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
-                bool[] p2 = SelekcjaTurniejowa(staraPop, starePrzyst, turniej);
-                (bool[] c1, bool[] c2) = KrzyzowanieJednopunktowe(p1, p2);
-                MutacjaJednopunktowa(c1);
-                MutacjaJednopunktowa(c2);
-                nowaPop[i] = c1;
-                nowaPop[i + 1] = c2;
-            }
+                for (int i = 1; i < rozmiarPopulacji; i += 2)
+                {
+                    // Wybór rodziców (selekcja turniejowa)
+                    bool[] rodzic1 = SelekcjaTurniejowa(populacja, przystosowanie, rozmiarTurnieju);
+                    bool[] rodzic2 = SelekcjaTurniejowa(populacja, przystosowanie, rozmiarTurnieju);
 
-            // 1 elita (najlepszy)
-            int best = ZnajdzNajlepszy(starePrzyst);
-            nowaPop[12] = (bool[])staraPop[best].Clone();
+                    // Krzyżowanie jednopunktowe
+                    (bool[] dziecko1, bool[] dziecko2) = KrzyzowanieJednopunktowe(rodzic1, rodzic2);
 
-            return nowaPop;
+                    // Mutacja jednopunktowa
+                    MutacjaJednopunktowa(dziecko1);
+                    MutacjaJednopunktowa(dziecko2);
+
+                    // Dodanie dzieci do nowej populacji
+                    if (i < rozmiarPopulacji - 1)
+                    {
+                        nowaPopulacja[i] = dziecko1;
+                        nowaPopulacja[i + 1] = dziecko2;
+                    }
+                    else
+                    {
+                        // Jeśli rozmiar populacji jest nieparzysty, 
+                        // wstawiamy tylko dziecko1 na ostatnie miejsce
+                        nowaPopulacja[i] = dziecko1;
+                    }
+                }
+
+                // 3) Zamiana starej populacji na nową
+                populacja = nowaPopulacja;
+
+                // 4) Obliczanie przystosowania (fitness) w nowej populacji
+                przystosowanie = ObliczPrzystosowanieXOR(populacja, bityNaWage);
+
+            return populacja;
         }
 
         // ====================================================================
@@ -287,7 +293,7 @@ namespace AlGen
             }
             return (bool[])wybrany.Clone();
         }
-
+        
         public int ZnajdzNajlepszy(double[] przyst)
         {
             double maxVal = double.MinValue;
