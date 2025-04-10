@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlGen")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09ba9b0985aac70ffd3162e15dbde24b1a3b517f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15b4816a10a9b45a9b31a413de62d1e5c31cdb41")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlGen")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlGen")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

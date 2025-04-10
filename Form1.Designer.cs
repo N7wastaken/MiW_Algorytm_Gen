@@ -126,6 +126,8 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "AlGen";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.BackColor = System.Drawing.Color.GhostWhite;
 
             // ============================================================
             // Dywanik (Zadanie 1)
@@ -190,6 +192,7 @@
             this.txtWynikiDywanik.Location = new System.Drawing.Point(10, 160);
             this.txtWynikiDywanik.Size = new System.Drawing.Size(340, 150);
             this.txtWynikiDywanik.ReadOnly = true;
+            this.txtWynikiDywanik.BackColor = System.Drawing.Color.GhostWhite;
 
             // ============================================================
             // Sinus (Zadanie 2)
@@ -259,6 +262,7 @@
             this.txtWynikiSinus.Location = new System.Drawing.Point(360, 160);
             this.txtWynikiSinus.Size = new System.Drawing.Size(340, 150);
             this.txtWynikiSinus.ReadOnly = true;
+            this.txtWynikiSinus.BackColor = System.Drawing.Color.GhostWhite;
 
             // ============================================================
             // XOR (Zadanie 3)
@@ -323,6 +327,7 @@
             this.txtWynikiXOR.Location = new System.Drawing.Point(710, 160);
             this.txtWynikiXOR.Size = new System.Drawing.Size(340, 150);
             this.txtWynikiXOR.ReadOnly = true;
+            this.txtWynikiXOR.BackColor = System.Drawing.Color.GhostWhite;
 
             // ------------------------------------------------------------
             // Ustawienia timerów

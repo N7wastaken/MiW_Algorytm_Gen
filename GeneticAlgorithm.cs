@@ -220,7 +220,7 @@ namespace AlGen
                     sse += blad * blad;
                 }
 
-                fit[i] = -sse;
+                fit[i] = -sse; // im mniejsze SSE, tym lepiej (dlatego minus)
             }
             return fit;
         }
@@ -229,46 +229,46 @@ namespace AlGen
         {
             int rozmiarPopulacji = populacja.Length;
 
-            
-                // Tworzymy nową populację
-                bool[][] nowaPopulacja = new bool[rozmiarPopulacji][];
 
-                // 1) Elitaryzm – zachowujemy najlepszego osobnika
-                int najlepszyIndeks = ZnajdzNajlepszy(przystosowanie);
-                nowaPopulacja[0] = (bool[])populacja[najlepszyIndeks].Clone();
+            // Tworzymy nową populację
+            bool[][] nowaPopulacja = new bool[rozmiarPopulacji][];
 
-                for (int i = 1; i < rozmiarPopulacji; i += 2)
+            // 1) Elitaryzm – zachowujemy najlepszego osobnika
+            int najlepszyIndeks = ZnajdzNajlepszy(przystosowanie);
+            nowaPopulacja[0] = (bool[])populacja[najlepszyIndeks].Clone();
+
+            for (int i = 1; i < rozmiarPopulacji; i += 2)
+            {
+                // Wybór rodziców (selekcja turniejowa)
+                bool[] rodzic1 = SelekcjaTurniejowa(populacja, przystosowanie, rozmiarTurnieju);
+                bool[] rodzic2 = SelekcjaTurniejowa(populacja, przystosowanie, rozmiarTurnieju);
+
+                // Krzyżowanie jednopunktowe
+                (bool[] dziecko1, bool[] dziecko2) = KrzyzowanieJednopunktowe(rodzic1, rodzic2);
+
+                // Mutacja jednopunktowa
+                MutacjaJednopunktowa(dziecko1);
+                MutacjaJednopunktowa(dziecko2);
+
+                // Dodanie dzieci do nowej populacji
+                if (i < rozmiarPopulacji - 1)
                 {
-                    // Wybór rodziców (selekcja turniejowa)
-                    bool[] rodzic1 = SelekcjaTurniejowa(populacja, przystosowanie, rozmiarTurnieju);
-                    bool[] rodzic2 = SelekcjaTurniejowa(populacja, przystosowanie, rozmiarTurnieju);
-
-                    // Krzyżowanie jednopunktowe
-                    (bool[] dziecko1, bool[] dziecko2) = KrzyzowanieJednopunktowe(rodzic1, rodzic2);
-
-                    // Mutacja jednopunktowa
-                    MutacjaJednopunktowa(dziecko1);
-                    MutacjaJednopunktowa(dziecko2);
-
-                    // Dodanie dzieci do nowej populacji
-                    if (i < rozmiarPopulacji - 1)
-                    {
-                        nowaPopulacja[i] = dziecko1;
-                        nowaPopulacja[i + 1] = dziecko2;
-                    }
-                    else
-                    {
-                        // Jeśli rozmiar populacji jest nieparzysty, 
-                        // wstawiamy tylko dziecko1 na ostatnie miejsce
-                        nowaPopulacja[i] = dziecko1;
-                    }
+                    nowaPopulacja[i] = dziecko1;
+                    nowaPopulacja[i + 1] = dziecko2;
                 }
+                else
+                {
+                    // Jeśli rozmiar populacji jest nieparzysty, 
+                    // wstawiamy tylko dziecko1 na ostatnie miejsce
+                    nowaPopulacja[i] = dziecko1;
+                }
+            }
 
-                // 3) Zamiana starej populacji na nową
-                populacja = nowaPopulacja;
+            // 3) Zamiana starej populacji na nową
+            populacja = nowaPopulacja;
 
-                // 4) Obliczanie przystosowania (fitness) w nowej populacji
-                przystosowanie = ObliczPrzystosowanieXOR(populacja, bityNaWage);
+            // 4) Obliczanie przystosowania (fitness) w nowej populacji
+            przystosowanie = ObliczPrzystosowanieXOR(populacja, bityNaWage);
 
             return populacja;
         }
@@ -293,7 +293,7 @@ namespace AlGen
             }
             return (bool[])wybrany.Clone();
         }
-        
+
         public int ZnajdzNajlepszy(double[] przyst)
         {
             double maxVal = double.MinValue;
@@ -385,20 +385,14 @@ namespace AlGen
         // -------------------------
         private double PrzepuscXOR(double x1, double x2, double[] w)
         {
-            // Mamy 3 neurony, każdy po 3 wagi:
-            // neuron1: w[0], w[1], w[2]
-            // neuron2: w[3], w[4], w[5]
-            // neuron3: w[6], w[7], w[8]
-            // Bias jest zawsze w kolejnej pozycji (np. w[2], w[5], w[8])
+            // Warstwa ukryta (2 neurony)
+            double h1 = Sigmoid(x1 * w[0] + x2 * w[1] + w[2]); // neuron 1
+            double h2 = Sigmoid(x1 * w[3] + x2 * w[4] + w[5]); // neuron 2
 
-            // 1) Każdy neuron -> sigmoida
-            double n1 = Sigmoid(x1 * w[0] + x2 * w[1] + w[2]);
-            double n2 = Sigmoid(x1 * w[3] + x2 * w[4] + w[5]);
-            double n3 = Sigmoid(x1 * w[6] + x2 * w[7] + w[8]);
+            // Warstwa wyjściowa (1 neuron)
+            double output = Sigmoid(h1 * w[6] + h2 * w[7] + w[8]);
 
-            // 2) Łączymy wyniki: np. prosta logika – jeżeli (n1+n2+n3) > 1.5 => 1, else 0
-            double suma = n1 + n2 + n3;
-            return (suma > 1.5) ? 1.0 : 0.0;
+            return output;
         }
 
         private double Sigmoid(double s)
